@@ -1,1 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartBiz Manager</title>
 
+<style>
+*{box-sizing:border-box}
+body{
+ font-family:Arial,sans-serif;
+ margin:0;background:#f3f5f9;color:#202b3c;
+}
+header{
+ background:#142d4e;color:white;
+ padding:22px 16px;
+}
+header h2{margin:0}
+header p{color:#cbd5e1}
+.container{padding:16px;max-width:850px;margin:auto}
+.cards{
+ display:grid;grid-template-columns:repeat(2,1fr);
+ gap:12px;
+}
+.card{
+ background:white;padding:18px;border-radius:12px;
+ box-shadow:0 2px 8px #00000010;
+}
+.card h3{font-size:13px;color:#64748b}
+.card strong{font-size:21px}
+nav{
+ display:flex;gap:7px;overflow-x:auto;
+ margin:18px 0;
+}
+button{
+ border:0;padding:12px 15px;border-radius:7px;
+ background:#1769aa;color:white;font-weight:bold;
+ cursor:pointer;
+}
+nav button{white-space:nowrap}
+nav button.active{background:#142d4e}
+input,select{
+ width:100%;padding:13px;margin:7px 0 13px;
+ border:1px solid #ccd3dd;border-radius:7px;
+ font-size:15px;
+}
+label{font-size:13px;font-weight:bold}
+.section{display:none}
+.section.active{display:block}
+.panel{
+ background:white;padding:17px;border-radius:12px;
+ margin-bottom:15px;
+}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td,th{padding:10px;border-bottom:1px solid #eee;text-align:left}
+.danger{background:#c0392b}
+small{color:#64748b}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>SmartBiz Manager</h2>
+<p>Simple business management dashboard</p>
+</header>
+
+<div class="container">
+
+<div class="cards">
+<div class="card">
+<h3>TOTAL SALES</h3>
+<strong id="salesTotal">₦0</strong>
+</div>
+<div class="card">
+<h3>TOTAL EXPENSES</h3>
+<strong id="expenseTotal">₦0</strong>
+</div>
+<div class="card">
+<h3>NET PROFIT</h3>
+<strong id="profitTotal">₦0</strong>
+</div>
+<div class="card">
+<h3>PRODUCTS</h3>
+<strong id="productTotal">0</strong>
+</div>
+</div>
+
+<nav>
+<button class="active" onclick="showTab('dashboard',this)">Dashboard</button>
+<button onclick="showTab('sales',this)">Sales</button>
+<button onclick="showTab('expenses',this)">Expenses</button>
+<button onclick="showTab('inventory',this)">Inventory</button>
+<button onclick="showTab('invoice',this)">Invoice</button>
+</nav>
+
+<section id="dashboard" class="section active">
+<div class="panel">
+<h3>Welcome to SmartBiz!</h3>
+<p>Manage your business activities in one place.</p>
+<h3>Recent Transactions</h3>
+<div id="recent"></div>
+</div>
+</section>
+
+<section id="sales" class="section">
+<div class="panel">
+<h3>Record New Sale</h3>
+<label>Product name</label>
+<input id="saleName" placeholder="Product name">
+<label>Quantity</label>
+<input id="saleQty" type="number" min="1" placeholder="Quantity">
+<label>Unit price (₦)</label>
+<input id="salePrice" type="number" min="0" placeholder="Price">
+<button onclick="addSale()">Save Sale</button>
+</div>
+<div class="panel">
+<h3>Sales History</h3>
+<div id="salesHistory"></div>
+</div>
+</section>
+
+<section id="expenses" class="section">
+<div class="panel">
+<h3>Record Expense</h3>
+<label>Description</label>
+<input id="expenseName" placeholder="What did you spend on?">
+<label>Amount (₦)</label>
+<input id="expenseAmount" type="number" min="0" placeholder="Amount">
+<button onclick="addExpense()">Save Expense</button>
+</div>
+<div class="panel">
+<h3>Expense History</h3>
+<div id="expenseHistory"></div>
+</div>
+</section>
+
+<section id="inventory" class="section">
+<div class="panel">
+<h3>Add Product</h3>
+<label>Product name</label>
+<input id="productName" placeholder="Product name">
+<label>Quantity in stock</label>
+<input id="productQty" type="number" min="0" placeholder="Quantity">
+<label>Selling price (₦)</label>
+<input id="productPrice" type="number" min="0" placeholder="Price">
+<button onclick="addProduct()">Add Product</button>
+</div>
+<div class="panel">
+<h3>Inventory List</h3>
+<div id="inventoryList"></div>
+</div>
+</section>
+
+<section id="invoice" class="section">
+<div class="panel">
+<h3>Invoice Generator</h3>
+<label>Business name</label>
+<input id="businessName" placeholder="Your business name">
+<label>Customer name</label>
+<input id="customerName" placeholder="Customer name">
+<label>Product or service</label>
+<input id="invoiceProduct" placeholder="Product name">
+<label>Quantity</label>
+<input id="invoiceQty" type="number" min="1" value="1">
+<label>Unit price (₦)</label>
+<input id="invoicePrice" type="number" min="0" placeholder="Price">
+<button onclick="makeInvoice()">Generate Invoice</button>
+<div id="invoiceResult"></div>
+</div>
+</section>
+
+</div>
+
+<script>
+const money=n=>"₦"+Number(n).toLocaleString("en-NG");
+
+let sales=JSON.parse(localStorage.getItem("sales")||"[]");
+let expenses=JSON.parse(localStorage.getItem("expenses")||"[]");
+let products=JSON.parse(localStorage.getItem("products")||"[]");
+
+function save(){
+ localStorage.setItem("sales",JSON.stringify(sales));
+ localStorage.setItem("expenses",JSON.stringify(expenses));
+ localStorage.setItem("products",JSON.stringify(products));
+ render();
+}
+
+function showTab(id,btn){
+ document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ btn.classList.add("active");
+}
+
+function addSale(){
+ let name=saleName.value.trim();
+ let qty=Number(saleQty.value);
+ let price=Number(salePrice.value);
+ if(!name||qty<=0||price<=0){alert("Enter valid sale details");return}
+ sales.unshift({name,qty,price,total:qty*price,date:new Date().toLocaleDateString()});
+ saleName.value="";saleQty.value="";salePrice.value="";
+ save();
+}
+
+function addExpense(){
+ let name=expenseName.value.trim();
+ let amount=Number(expenseAmount.value);
+ if(!name||amount<=0){alert("Enter valid expense details");return}
+ expenses.unshift({name,amount,date:new Date().toLocaleDateString()});
+ expenseName.value="";expenseAmount.value="";
+ save();
+}
+
+function addProduct(){
+ let name=productName.value.trim();
+ let qty=Number(productQty.value);
+ let price=Number(productPrice.value);
+ if(!name||qty<0||price<=0){alert("Enter valid product details");return}
+ products.push({name,qty,price});
+ productName.value="";productQty.value="";productPrice.value="";
+ save();
+}
+
+function render(){
+ let st=sales.reduce((a,b)=>a+b.total,0);
+ let et=expenses.reduce((a,b)=>a+b.amount,0);
+
+ salesTotal.textContent=money(st);
+ expenseTotal.textContent=money(et);
+ profitTotal.textContent=money(st-et);
+ productTotal.textContent=products.length;
+
+ salesHistory.innerHTML=sales.map(x=>
+ `<p>${x.name} — ${x.qty} × ${money(x.price)} = <b>${money(x.total)}</b> <small>${x.date}</small></p>`
+ ).join("")||"No sales recorded.";
+
+ expenseHistory.innerHTML=expenses.map(x=>
+ `<p>${x.name} — <b>${money(x.amount)}</b> <small>${x.date}</small></p>`
+ ).join("")||"No expenses recorded.";
+
+ inventoryList.innerHTML=products.map((x,i)=>
+ `<p><b>${x.name}</b> — ${x.qty} units — ${money(x.price)}
+ ${x.qty<=5?"<small>LOW STOCK</small>":""}
+ <button class="danger" onclick="deleteProduct(${i})">Delete</button></p>`
+ ).join("")||"No products added.";
+
+ recent.innerHTML=[...sales.map(x=>({name:x.name,value:x.total,type:"Sale"})),
+ ...expenses.map(x=>({name:x.name,value:x.amount,type:"Expense"}))]
+ .slice(0,8).map(x=>`<p>${x.type}: ${x.name} — ${money(x.value)}</p>`).join("")||"No transactions yet.";
+}
+
+function deleteProduct(i){
+ if(confirm("Delete this product?")){
+ products.splice(i,1);save();
+ }
+}
+
+function makeInvoice(){
+ let business=businessName.value.trim();
+ let customer=customerName.value.trim();
+ let product=invoiceProduct.value.trim();
+ let qty=Number(invoiceQty.value);
+ let price=Number(invoicePrice.value);
+
+ if(!business||!customer||!product||qty<=0||price<=0){
+ alert("Complete all invoice details");return;
+ }
+
+ let total=qty*price;
+ invoiceResult.innerHTML=`
+ <div id="printArea" class="panel">
+ <h2>${business}</h2>
+ <h3>INVOICE</h3>
+ <p>Customer: ${customer}</p>
+ <p>Product: ${product}</p>
+ <p>Quantity: ${qty}</p>
+ <p>Unit price: ${money(price)}</p>
+ <h2>Total: ${money(total)}</h2>
+ <p>Thank you for your business!</p>
+ </div>
+ <button onclick="window.print()">Print / Save PDF</button>`;
+}
+
+render();
+</script>
+
+</body>
+</html>
