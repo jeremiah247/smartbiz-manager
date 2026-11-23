@@ -3,1124 +3,586 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SmartBiz Manager | Global Business Management</title>
-
+<meta name="theme-color" content="#142d4e">
+<title>SmartBiz Manager | Version 1.2</title>
 <style>
-
-:root {
-    --primary: #142d4e;
-    --secondary: #1769aa;
-    --background: #f3f5f9;
-    --white: #ffffff;
-    --text: #202b3c;
-    --muted: #64748b;
-    --green: #15965c;
-    --red: #d64545;
-    --border: #e2e8f0;
+:root{--primary:#142d4e;--secondary:#1769aa;--bg:#f3f5f9;--text:#202b3c;--muted:#64748b;--green:#15965c;--red:#c83d3d;--border:#e2e8f0}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--primary);color:#fff;padding:24px 5%}
+.header-content{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
+header h1{margin:0;font-size:28px}header p{color:#d7e1ed;margin:7px 0 0}
+.currency-box{min-width:230px}.currency-box label,.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
+.currency-box select{width:100%;padding:12px;border:0;border-radius:8px}
+.container{max-width:1200px;margin:auto;padding:24px 16px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.card,.panel{background:#fff;border-radius:15px;padding:20px;box-shadow:0 3px 14px #00000008}
+.card h3{margin:0 0 14px;color:var(--muted);font-size:13px}.card strong{font-size:23px;overflow-wrap:anywhere}
+.navigation{display:flex;gap:8px;overflow-x:auto;padding:17px 0 12px;margin:8px 0 14px;scrollbar-width:thin}
+button{border:0;border-radius:8px;padding:12px 16px;background:var(--secondary);color:white;font-weight:bold;cursor:pointer}
+button:hover{opacity:.9}.navigation button{white-space:nowrap;flex:0 0 auto}.navigation button.active{background:var(--primary)}
+button.secondary{background:#e8eef5;color:var(--primary)}button.danger{background:var(--red)}button.small{padding:8px 10px;font-size:12px}
+.section{display:none}.section.active{display:block}.panel{margin-bottom:18px}.panel h2,.panel h3{margin-top:0}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{margin-bottom:12px}.field input,.field select,input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff;color:var(--text)}
+.field input:focus,.field select:focus,input:focus,select:focus{outline:2px solid #1769aa35;border-color:var(--secondary)}
+.full{grid-column:1/-1}.muted{color:var(--muted)}.success{color:var(--green)}.warning{color:#9a6500}.low{color:var(--red);font-weight:bold}
+.table-wrap{overflow-x:auto;width:100%}table{width:100%;border-collapse:collapse;min-width:540px}
+th,td{text-align:left;padding:12px;border-bottom:1px solid var(--border);vertical-align:top}
+th{font-size:12px;color:var(--muted);white-space:nowrap}
+.empty{padding:14px 0;color:var(--muted)}
+.notice{padding:12px 14px;border-radius:9px;background:#eef5fb;color:#244665;margin:12px 0;line-height:1.5}
+.invoice{border:1px solid var(--border);padding:24px;border-radius:10px;margin-top:18px;background:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.inline>*{flex:1}
+.statline{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:25px}
+@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){
+ header{padding:20px 15px}.header-content{display:block}.currency-box{margin-top:18px}
+ .container{padding:15px 11px}.card{padding:15px}.card strong{font-size:18px}.card h3{font-size:11px}
+ .panel{padding:15px}.form-grid{grid-template-columns:1fr}.navigation{margin-right:-3px}
+ button{padding:11px 13px}table{font-size:13px;min-width:520px}
 }
-
-* {
-    box-sizing: border-box;
+@media print{
+ body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}
+ #printArea{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none}
+ .no-print{display:none!important}
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: var(--background);
-    color: var(--text);
-}
-
-header {
-    background: var(--primary);
-    color: white;
-    padding: 25px 5%;
-}
-
-.header-content {
-    max-width: 1200px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 27px;
-}
-
-header p {
-    color: #cbd5e1;
-    margin-bottom: 0;
-}
-
-.currency-box {
-    min-width: 200px;
-}
-
-.currency-box label {
-    display: block;
-    margin-bottom: 7px;
-    font-size: 13px;
-}
-
-.currency-box select {
-    width: 100%;
-    padding: 11px;
-    border-radius: 7px;
-    border: none;
-}
-
-.container {
-    max-width: 1200px;
-    padding: 25px 18px;
-    margin: auto;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 18px;
-}
-
-.card {
-    background: white;
-    padding: 22px;
-    border-radius: 13px;
-    box-shadow: 0 3px 12px #00000008;
-}
-
-.card h3 {
-    color: var(--muted);
-    font-size: 13px;
-    margin: 0 0 15px;
-}
-
-.card strong {
-    font-size: 23px;
-    overflow-wrap: anywhere;
-}
-
-.navigation {
-    display: flex;
-    gap: 9px;
-    margin: 25px 0;
-    overflow-x: auto;
-    padding-bottom: 8px;
-}
-
-button {
-    cursor: pointer;
-    border: none;
-    border-radius: 7px;
-    padding: 12px 17px;
-    background: var(--secondary);
-    color: white;
-    font-weight: bold;
-}
-
-.navigation button {
-    white-space: nowrap;
-}
-
-.navigation button.active {
-    background: var(--primary);
-}
-
-button:hover {
-    opacity: 0.88;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-.panel {
-    background: white;
-    border-radius: 13px;
-    padding: 22px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 12px #00000008;
-}
-
-.panel h2,
-.panel h3 {
-    margin-top: 0;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.form-group {
-    margin-bottom: 12px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
-    margin-bottom: 7px;
-}
-
-input, select {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    font-size: 15px;
-    background: white;
-    color: var(--text);
-}
-
-input:focus, select:focus {
-    outline: 2px solid #1769aa40;
-    border-color: var(--secondary);
-}
-
-.full-width {
-    grid-column: 1 / -1;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    padding: 13px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-}
-
-th {
-    color: var(--muted);
-    font-size: 13px;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-.low-stock {
-    color: var(--red);
-    font-weight: bold;
-}
-
-.success {
-    color: var(--green);
-}
-
-.danger {
-    background: var(--red);
-}
-
-.muted {
-    color: var(--muted);
-}
-
-.empty {
-    color: var(--muted);
-    padding: 15px 0;
-}
-
-.invoice {
-    border: 1px solid var(--border);
-    padding: 25px;
-    margin-top: 20px;
-    border-radius: 10px;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: var(--muted);
-    font-size: 13px;
-}
-
-/* TABLET */
-
-@media(max-width: 900px) {
-
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-}
-
-/* MOBILE */
-
-@media(max-width: 600px) {
-
-    header {
-        padding: 22px 17px;
-    }
-
-    .header-content {
-        display: block;
-    }
-
-    .currency-box {
-        margin-top: 20px;
-    }
-
-    .container {
-        padding: 17px 12px;
-    }
-
-    .cards {
-        gap: 10px;
-    }
-
-    .card {
-        padding: 15px;
-    }
-
-    .card strong {
-        font-size: 18px;
-    }
-
-    .card h3 {
-        font-size: 11px;
-    }
-
-    .panel {
-        padding: 16px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .navigation button {
-        padding: 11px 13px;
-    }
-
-    table {
-        font-size: 13px;
-        min-width: 450px;
-    }
-
-}
-
-@media print {
-
-    body * {
-        visibility: hidden;
-    }
-
-    #printArea,
-    #printArea * {
-        visibility: visible;
-    }
-
-    #printArea {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        border: none;
-    }
-
-    .no-print {
-        display: none !important;
-    }
-
-}
-
 </style>
 </head>
-
 <body>
 
 <header>
-
-<div class="header-content">
-
-<div>
-<h1>SmartBiz Manager</h1>
-<p>Global Business Management Platform</p>
-</div>
-
-<div class="currency-box">
-<label for="currencySelect">Select Business Currency</label>
-
-<select id="currencySelect">
-
-<option value="NGN">NGN - Nigerian Naira</option>
-<option value="USD">USD - US Dollar</option>
-<option value="GBP">GBP - British Pound</option>
-<option value="EUR">EUR - Euro</option>
-<option value="CAD">CAD - Canadian Dollar</option>
-<option value="AUD">AUD - Australian Dollar</option>
-<option value="GHS">GHS - Ghanaian Cedi</option>
-<option value="KES">KES - Kenyan Shilling</option>
-<option value="ZAR">ZAR - South African Rand</option>
-<option value="INR">INR - Indian Rupee</option>
-<option value="JPY">JPY - Japanese Yen</option>
-<option value="CHF">CHF - Swiss Franc</option>
-<option value="CNY">CNY - Chinese Yuan</option>
-<option value="AED">AED - UAE Dirham</option>
-<option value="NZD">NZD - New Zealand Dollar</option>
-
-</select>
-</div>
-
-</div>
+ <div class="header-content">
+  <div>
+   <h1>SmartBiz Manager</h1>
+   <p>Global Business Management Platform · Version 1.2</p>
+  </div>
+  <div class="currency-box">
+   <label for="currencySelect">Business / Display Currency</label>
+   <select id="currencySelect">
+    <option value="NGN">NGN - Nigerian Naira</option>
+    <option value="USD">USD - US Dollar</option>
+    <option value="GBP">GBP - British Pound</option>
+    <option value="EUR">EUR - Euro</option>
+    <option value="CAD">CAD - Canadian Dollar</option>
+    <option value="AUD">AUD - Australian Dollar</option>
+    <option value="GHS">GHS - Ghanaian Cedi</option>
+    <option value="KES">KES - Kenyan Shilling</option>
+    <option value="ZAR">ZAR - South African Rand</option>
+    <option value="INR">INR - Indian Rupee</option>
+    <option value="JPY">JPY - Japanese Yen</option>
+    <option value="CHF">CHF - Swiss Franc</option>
+    <option value="CNY">CNY - Chinese Yuan</option>
+    <option value="AED">AED - UAE Dirham</option>
+    <option value="NZD">NZD - New Zealand Dollar</option>
+   </select>
+  </div>
+ </div>
 </header>
 
-<div class="container">
-
-<!-- DASHBOARD CARDS -->
-
-<div class="cards">
-
-<div class="card">
-<h3>TOTAL SALES</h3>
-<strong id="salesTotal">₦0</strong>
-</div>
-
-<div class="card">
-<h3>TOTAL EXPENSES</h3>
-<strong id="expenseTotal">₦0</strong>
-</div>
-
-<div class="card">
-<h3>NET PROFIT</h3>
-<strong id="profitTotal">₦0</strong>
-</div>
-
-<div class="card">
-<h3>PRODUCTS</h3>
-<strong id="productTotal">0</strong>
-</div>
-
-</div>
-
-<!-- NAVIGATION -->
-
-<nav class="navigation no-print">
-
-<button class="active" data-tab="dashboard">Dashboard</button>
-
-<button data-tab="sales">Sales</button>
-
-<button data-tab="expenses">Expenses</button>
-
-<button data-tab="inventory">Inventory</button>
-
-<button data-tab="invoice">Invoices</button>
-
-</nav>
-
-<!-- DASHBOARD -->
-
-<section id="dashboard" class="section active">
-
-<div class="panel">
-
-<h2>Welcome to SmartBiz!</h2>
-
-<p class="muted">
-Manage your sales, expenses, inventory and invoices from one place.
-</p>
-
-<h3>Recent Transactions</h3>
-
-<div id="recent"></div>
-
-</div>
-
-<div class="panel">
-
-<h3>Inventory Alerts</h3>
-
-<div id="stockAlerts"></div>
-
-</div>
-
-</section>
-
-<!-- SALES -->
-
-<section id="sales" class="section">
-
-<div class="panel">
-
-<h2>Record New Sale</h2>
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>Product Name</label>
-<input id="saleName" placeholder="Enter product name">
-</div>
-
-<div class="form-group">
-<label>Quantity</label>
-<input id="saleQty" type="number" min="1" placeholder="Quantity">
-</div>
-
-<div class="form-group">
-<label>Unit Price</label>
-<input id="salePrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
-</div>
-
-</div>
-
-<button id="saveSale">Save Sale</button>
-
-</div>
-
-<div class="panel">
-
-<h3>Sales History</h3>
-
-<div class="table-wrapper">
-<table>
-<thead>
-<tr>
-<th>Product</th>
-<th>Quantity</th>
-<th>Total</th>
-<th>Date</th>
-</tr>
-</thead>
-
-<tbody id="salesHistory"></tbody>
-</table>
-</div>
-
-</div>
-
-</section>
-
-<!-- EXPENSES -->
-
-<section id="expenses" class="section">
-
-<div class="panel">
-
-<h2>Record Business Expense</h2>
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>Description</label>
-<input id="expenseName" placeholder="Expense description">
-</div>
-
-<div class="form-group">
-<label>Amount</label>
-<input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="Amount">
-</div>
-
-</div>
-
-<button id="saveExpense">Save Expense</button>
-
-</div>
-
-<div class="panel">
-
-<h3>Expense History</h3>
-
-<div class="table-wrapper">
-<table>
-<thead>
-<tr>
-<th>Description</th>
-<th>Amount</th>
-<th>Date</th>
-</tr>
-</thead>
-
-<tbody id="expenseHistory"></tbody>
-</table>
-</div>
-
-</div>
-
-</section>
-
-<!-- INVENTORY -->
-
-<section id="inventory" class="section">
-
-<div class="panel">
-
-<h2>Add New Product</h2>
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>Product Name</label>
-<input id="productName" placeholder="Product name">
-</div>
-
-<div class="form-group">
-<label>Quantity</label>
-<input id="productQty" type="number" min="0" step="1" placeholder="Available stock">
-</div>
-
-<div class="form-group">
-<label>Selling Price</label>
-<input id="productPrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
-</div>
-
-</div>
-
-<button id="saveProduct">Add Product</button>
-
-</div>
-
-<div class="panel">
-
-<h3>Inventory List</h3>
-
-<div class="table-wrapper">
-
-<table>
-
-<thead>
-<tr>
-<th>Product</th>
-<th>Quantity</th>
-<th>Price</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody id="inventoryList"></tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- INVOICE -->
-
-<section id="invoice" class="section">
-
-<div class="panel">
-
-<h2>Invoice Generator</h2>
-
-<div class="form-grid">
-
-<div class="form-group">
-<label>Business Name</label>
-<input id="businessName" placeholder="Business name">
-</div>
-
-<div class="form-group">
-<label>Customer Name</label>
-<input id="customerName" placeholder="Customer name">
-</div>
-
-<div class="form-group">
-<label>Product / Service</label>
-<input id="invoiceProduct" placeholder="Product name">
-</div>
-
-<div class="form-group">
-<label>Quantity</label>
-<input id="invoiceQty" type="number" min="1" value="1">
-</div>
-
-<div class="form-group">
-<label>Unit Price</label>
-<input id="invoicePrice" type="number" min="0.01" step="0.01" placeholder="Price">
-</div>
-
-</div>
-
-<button id="generateInvoice">Generate Invoice</button>
-
-<div id="invoiceResult"></div>
-
-</div>
-
-</section>
-
-</div>
-
-<footer>
-SmartBiz Manager | Global Edition | Version 1.1
-</footer>
+<main class="container">
+
+ <div class="cards">
+  <div class="card"><h3>TOTAL SALES</h3><strong id="salesTotal">—</strong></div>
+  <div class="card"><h3>TOTAL EXPENSES</h3><strong id="expenseTotal">—</strong></div>
+  <div class="card"><h3>NET PROFIT</h3><strong id="profitTotal">—</strong></div>
+  <div class="card"><h3>PRODUCTS</h3><strong id="productTotal">0</strong></div>
+ </div>
+
+ <nav class="navigation no-print" aria-label="Main navigation">
+  <button class="active" data-tab="dashboard">Dashboard</button>
+  <button data-tab="sales">Sales</button>
+  <button data-tab="expenses">Expenses</button>
+  <button data-tab="inventory">Inventory</button>
+  <button data-tab="customers">Customers</button>
+  <button data-tab="invoices">Invoices</button>
+  <button data-tab="reports">Reports</button>
+  <button data-tab="converter">Currency Converter</button>
+  <button data-tab="backup">Backup</button>
+ </nav>
+
+ <section id="dashboard" class="section active">
+  <div class="panel">
+   <h2>Welcome to SmartBiz</h2>
+   <p class="muted">Manage customers, sales, expenses, inventory and invoices in one place.</p>
+   <h3>Recent Transactions</h3>
+   <div id="recent"></div>
+  </div>
+
+  <div class="panel">
+   <h3>Inventory Alerts</h3>
+   <div id="stockAlerts"></div>
+  </div>
+
+  <div class="panel">
+   <h3>Data and currency notes</h3>
+   <p class="muted">Your records are saved in this browser on this device. Export a backup regularly. Amounts are stored with their original currency; changing the display currency does not rewrite transaction records.</p>
+   <div id="rateStatus" class="notice">Exchange-rate status will appear here.</div>
+  </div>
+ </section>
+
+ <section id="sales" class="section">
+  <div class="panel">
+   <h2>Record New Sale</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="saleName">Product / Service</label>
+     <input id="saleName" placeholder="e.g. Rice">
+    </div>
+    <div class="field">
+     <label for="saleQty">Quantity</label>
+     <input id="saleQty" type="number" min="1" step="1" placeholder="Quantity">
+    </div>
+    <div class="field">
+     <label for="salePrice">Unit Price (<span class="currencyLabel">NGN</span>)</label>
+     <input id="salePrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
+    </div>
+    <div class="field">
+     <label for="saleCustomer">Customer (optional)</label>
+     <select id="saleCustomer">
+      <option value="">Walk-in / not selected</option>
+     </select>
+    </div>
+   </div>
+   <button id="saveSale">Save Sale</button>
+  </div>
+
+  <div class="panel">
+   <h3>Sales History</h3>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Product</th><th>Customer</th><th>Qty</th>
+       <th>Total</th><th>Currency</th><th>Date</th>
+      </tr>
+     </thead>
+     <tbody id="salesHistory"></tbody>
+    </table>
+   </div>
+  </div>
+ </section>
+
+ <section id="expenses" class="section">
+  <div class="panel">
+   <h2>Record Business Expense</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="expenseName">Description</label>
+     <input id="expenseName" placeholder="e.g. Transport">
+    </div>
+    <div class="field">
+     <label for="expenseAmount">Amount (<span class="currencyLabel">NGN</span>)</label>
+     <input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="Amount">
+    </div>
+   </div>
+   <button id="saveExpense">Save Expense</button>
+  </div>
+
+  <div class="panel">
+   <h3>Expense History</h3>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr><th>Description</th><th>Amount</th><th>Currency</th><th>Date</th></tr>
+     </thead>
+     <tbody id="expenseHistory"></tbody>
+    </table>
+   </div>
+  </div>
+ </section>
+
+ <section id="inventory" class="section">
+  <div class="panel">
+   <h2>Add New Product</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="productName">Product Name</label>
+     <input id="productName" placeholder="Product name">
+    </div>
+    <div class="field">
+     <label for="productQty">Quantity in Stock</label>
+     <input id="productQty" type="number" min="0" step="1" placeholder="Available stock">
+    </div>
+    <div class="field">
+     <label for="productPrice">Selling Price (<span class="currencyLabel">NGN</span>)</label>
+     <input id="productPrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
+    </div>
+   </div>
+   <button id="saveProduct">Add Product</button>
+  </div>
+
+  <div class="panel">
+   <h3>Inventory List</h3>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Product</th><th>Qty</th><th>Price</th>
+       <th>Original Currency</th><th>Status</th><th>Action</th>
+      </tr>
+     </thead>
+     <tbody id="inventoryList"></tbody>
+    </table>
+   </div>
+  </div>
+ </section>
+
+ <section id="customers" class="section">
+  <div class="panel">
+   <h2>Customer Management</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="customerFullName">Customer Name</label>
+     <input id="customerFullName" placeholder="Full name">
+    </div>
+    <div class="field">
+     <label for="customerPhone">Phone Number</label>
+     <input id="customerPhone" type="tel" placeholder="Phone number">
+    </div>
+    <div class="field">
+     <label for="customerEmail">Email (optional)</label>
+     <input id="customerEmail" type="email" placeholder="Email address">
+    </div>
+    <div class="field">
+     <label for="customerAddress">Address (optional)</label>
+     <input id="customerAddress" placeholder="Address">
+    </div>
+   </div>
+   <button id="saveCustomer">Save Customer</button>
+  </div>
+
+  <div class="panel">
+   <h3>Customer Directory</h3>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr><th>Name</th><th>Phone</th><th>Email</th><th>Purchases</th><th>Action</th></tr>
+     </thead>
+     <tbody id="customerList"></tbody>
+    </table>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h3>Selected Customer History</h3>
+   <div class="field">
+    <label for="historyCustomer">Choose customer</label>
+    <select id="historyCustomer">
+     <option value="">Select a customer</option>
+    </select>
+   </div>
+   <div id="customerHistory" class="muted">Choose a customer to view linked sales and invoices.</div>
+  </div>
+ </section>
+
+ <section id="invoices" class="section">
+  <div class="panel">
+   <h2>Create Invoice</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="businessName">Business Name</label>
+     <input id="businessName" placeholder="Your business name">
+    </div>
+    <div class="field">
+     <label for="invoiceCustomer">Customer</label>
+     <select id="invoiceCustomer">
+      <option value="">Choose saved customer or enter below</option>
+     </select>
+    </div>
+    <div class="field">
+     <label for="invoiceCustomerName">Customer Name (if not saved)</label>
+     <input id="invoiceCustomerName" placeholder="Customer name">
+    </div>
+    <div class="field">
+     <label for="invoiceProduct">Product / Service</label>
+     <input id="invoiceProduct" placeholder="Description">
+    </div>
+    <div class="field">
+     <label for="invoiceQty">Quantity</label>
+     <input id="invoiceQty" type="number" min="1" step="1" value="1">
+    </div>
+    <div class="field">
+     <label for="invoicePrice">Unit Price (<span class="currencyLabel">NGN</span>)</label>
+     <input id="invoicePrice" type="number" min="0.01" step="0.01" placeholder="Unit price">
+    </div>
+   </div>
+   <button id="generateInvoice">Generate and Save Invoice</button>
+   <div id="invoiceResult"></div>
+  </div>
+
+  <div class="panel">
+   <h3>Saved Invoice History</h3>
+   <div class="table-wrap">
+    <table>
+     <thead>
+      <tr>
+       <th>Invoice No.</th><th>Customer</th><th>Total</th>
+       <th>Currency</th><th>Date</th><th>Action</th>
+      </tr>
+     </thead>
+     <tbody id="invoiceHistory"></tbody>
+    </table>
+   </div>
+  </div>
+ </section>
+
+ <section id="reports" class="section">
+  <div class="panel">
+   <h2>Financial Reports</h2>
+   <div class="form-grid">
+    <div class="field">
+     <label for="reportPeriod">Period</label>
+     <select id="reportPeriod">
+      <option value="today">Today</option>
+      <option value="7">Last 7 days</option>
+      <option value="30" selected>Last 30 days</option>
+      <option value="month">This month</option>
+      <option value="all">All records</option>
+     </select>
+    </div>
+   </div>
+   <button id="runReport">Generate Report</button>
+   <div id="reportResult"></div>
+  </div>
+ </section>
+
+ <section id="converter" class="section">
+  <div class="panel">
+   <h2>Currency Converter</h2>
+   <p class="muted">Uses a public exchange-rate service when internet access is available. This is an estimate, not a payment or bank settlement rate.</p>
+   <div class="form-grid">
+    <div class="field">
+     <label for="convertAmount">Amount</label>
+     <input id="convertAmount" type="number" min="0" step="any" value="100">
+    </div>
+    <div class="field">
+     <label for="fromCurrency">From</label>
+     <select id="fromCurrency"></select>
+    </div>
+    <div class="field">
+     <label for="toCurrency">To</label>
+     <select id="toCurrency"></select>
+    </div>
+   </div>
+   <button id="convertButton">Convert</button>
+   <div id="conversionResult" class="notice" aria-live="polite">Enter an amount and select currencies.</div>
+  </div>
+ </section>
+
+ <section id="backup" class="section">
+  <div class="panel">
+   <h2>Backup and Restore</h2>
+   <p>Download a copy of your SmartBiz records. Keep the backup somewhere safe. Restoring a backup replaces the records currently in this browser.</p>
+   <div class="actions">
+    <button id="exportBackup">Download Backup (JSON)</button>
+    <button class="secondary" id="exportCSV">Export Sales and Expenses (CSV)</button>
+   </div>
+   <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
+   <div class="field">
+    <label for="backupFile">Choose a SmartBiz JSON backup</label>
+    <input id="backupFile" type="file" accept=".json,application/json">
+   </div>
+   <button class="danger" id="importBackup">Restore Backup</button>
+   <div class="notice">Privacy note: this version stores data locally in your browser. It does not synchronise between devices or provide cloud accounts. Do not enter sensitive customer information on a shared device.</div>
+  </div>
+ </section>
+
+</main>
+
+<footer>SmartBiz Manager · Global Edition · Version 1.2</footer>
 
 <script>
+"use strict";
 
-// APPLICATION DATA
-
-const KEYS = {
- sales: "sales",
- expenses: "expenses",
- products: "products",
- currency: "currency"
+const KEYS={
+ sales:"sales",
+ expenses:"expenses",
+ products:"products",
+ currency:"currency",
+ customers:"smartbiz_customers_v12",
+ invoices:"smartbiz_invoices_v12"
 };
 
-function loadData(key) {
- try {
-  const data = JSON.parse(localStorage.getItem(key) || "[]");
-  return Array.isArray(data) ? data : [];
- } catch {
+const CURRENCIES=["NGN","USD","GBP","EUR","CAD","AUD","GHS","KES","ZAR","INR","JPY","CHF","CNY","AED","NZD"];
+
+const $=id=>document.getElementById(id);
+
+function readArray(key){
+ try{
+  const v=JSON.parse(localStorage.getItem(key)||"[]");
+  return Array.isArray(v)?v:[];
+ }catch(e){
   return [];
  }
 }
 
-let sales = loadData(KEYS.sales);
-let expenses = loadData(KEYS.expenses);
-let products = loadData(KEYS.products);
-
-let currency = localStorage.getItem(KEYS.currency) || "NGN";
-
-const $ = id => document.getElementById(id);
-
-function escapeHTML(value) {
- return String(value).replace(/[&<>"']/g, char => ({
-  "&": "&amp;",
-  "<": "&lt;",
-  ">": "&gt;",
-  '"': "&quot;",
-  "'": "&#39;"
- })[char]);
+function safeSave(key,value){
+ try{
+  localStorage.setItem(key,JSON.stringify(value));
+  return true;
+ }catch(e){
+  alert("Could not save data. Your browser storage may be full. Export a backup and free some space.");
+  return false;
+ }
 }
 
-// CURRENCY FORMATTER
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
 
-function money(amount) {
+let currency=CURRENCIES.includes(localStorage.getItem(KEYS.currency))
+ ?localStorage.getItem(KEYS.currency)
+ :"NGN";
 
- try {
+let sales=readArray(KEYS.sales);
+let expenses=readArray(KEYS.expenses);
+let products=readArray(KEYS.products);
+let customers=readArray(KEYS.customers);
+let invoices=readArray(KEYS.invoices);
 
-  return new Intl.NumberFormat("en", {
-   style: "currency",
-   currency: currency,
-   maximumFractionDigits: 2
-  }).format(Number(amount) || 0);
+let rates={};
+let rateDate="";
+let ratesReady=false;
 
- } catch {
+function migrateLegacy(){
+ // Older V1.1 entries did not store currency. Preserve their numeric values and
+ // assign the currency selected at upgrade time; do not silently convert them.
+ let changed=false;
 
-  return currency + " " + Number(amount || 0).toFixed(2);
-
+ for(const list of [sales,expenses,products]){
+  list.forEach(x=>{
+   if(!x.currency){
+    x.currency=currency;
+    changed=true;
+   }
+  });
  }
 
+ if(changed){
+  safeSave(KEYS.sales,sales);
+  safeSave(KEYS.expenses,expenses);
+  safeSave(KEYS.products,products);
+ }
 }
 
-// SAVE DATA
+migrateLegacy();
 
-function saveData() {
-
- localStorage.setItem(KEYS.sales, JSON.stringify(sales));
-
- localStorage.setItem(KEYS.expenses, JSON.stringify(expenses));
-
- localStorage.setItem(KEYS.products, JSON.stringify(products));
-
- localStorage.setItem(KEYS.currency, currency);
-
- render();
-
+function persist(){
+ return safeSave(KEYS.sales,sales)
+ &&safeSave(KEYS.expenses,expenses)
+ &&safeSave(KEYS.products,products)
+ &&safeSave(KEYS.customers,customers)
+ &&safeSave(KEYS.invoices,invoices)
+ &&safeSave(KEYS.currency,currency);
 }
 
-// CURRENCY CHANGE
+function money(value,code=currency){
+ const n=Number(value)||0;
+ try{
+  return new Intl.NumberFormat("en",{
+   style:"currency",
+   currency:code,
+   maximumFractionDigits:2
+  }).format(n);
+ }catch(e){
+  return code+" "+n.toFixed(2);
+ }
+}
 
-$("currencySelect").value = currency;
+function dateISO(d=new Date()){
+ return d.toISOString().slice(0,10);
+}
 
-$("currencySelect").addEventListener("change", function() {
+function showTab(tab){
+ document.querySelectorAll(".section").forEach(s=>{
+  s.classList.toggle("active",s.id===tab);
+ });
 
- currency = this.value;
+ document.querySelectorAll(".navigation button").forEach(b=>{
+  b.classList.toggle("active",b.dataset.tab===tab);
+ });
 
- localStorage.setItem(KEYS.currency, currency);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
 
- render();
-
+document.querySelectorAll(".navigation button").forEach(b=>{
+ b.addEventListener("click",()=>showTab(b.dataset.tab));
 });
 
-// NAVIGATION
+function customerName(id){
+ return customers.find(c=>String(c.id)===String(id))?.name||"Walk-in";
+}
 
-document.querySelectorAll(".navigation button").forEach(button => {
+function updateCustomerSelects(){
+ const options=customers.map(c=>
+  `<option value="${esc(c.id)}">${esc(c.name)}${c.phone?" · "+esc(c.phone):""}</option>`
+ ).join("");
 
- button.addEventListener("click", function() {
+ $("saleCustomer").innerHTML=
+  '<option value="">Walk-in / not selected</option>'+options;
 
-  document.querySelectorAll(".section").forEach(section => {
-   section.classList.remove("active");
+ $("invoiceCustomer").innerHTML=
+  '<option value="">Choose saved customer or enter below</option>'+options;
+
+ $("historyCustomer").innerHTML=
+  '<option value="">Select a customer</option>'+options;
+}
+
+function recordDate(item){
+ if(item.isoDate)return item.isoDate;
+ const parsed=new Date(item.date||"");
+ return isNaN(parsed)?dateISO():dateISO(parsed);
+}
+
+function render(){
+
+ $("currencySelect").value=currency;
+
+ document.querySelectorAll(".currencyLabel").forEach(x=>{
+  x.textContent=currency;
+ });
+
+ // Convert stored records for display only when a usable current rate is available.
+ const convertDisplay=(amount,from)=>{
+  if(from===currency)return money(amount);
+  const r=rates[from]?.[currency];
+  return r?money(Number(amount)*r):money(amount,from)+" (rate unavailable)";
+ };
+
+ const sumByCurrency=(items,field)=>{
+  const totals={};
+
+  items.forEach(x=>{
+   const c=x.currency||currency;
+   totals[c]=(totals[c]||0)+Number(x[field]||0);
   });
 
-  document.querySelectorAll(".navigation button").forEach(btn => {
-   btn.classList.remove("active");
+  let total=0;
+  let complete=true;
+
+  Object.entries(totals).forEach(([c,v])=>{
+   if(c===currency)total+=v;
+   else if(rates[c]?.[currency])total+=v*rates[c][currency];
+   else complete=false;
   });
 
-  $(this.dataset.tab).classList.add("active");
+  return {total,complete,totals};
+ };
 
-  this.classList.add("active");
+ const s=sumByCurrency(sales,"total");
+ const e=sumByCurrency(expenses,"amount");
 
- });
+ $("salesTotal").textContent=
+  (s.complete?"":"≈ ")+money(s.total)+(s.complete?"":" *");
 
-});
-
-// SALES
-
-$("saveSale").addEventListener("click", function() {
-
- const name = $("saleName").value.trim();
-
- const qty = Number($("saleQty").value);
-
- const price = Number($("salePrice").value);
-
- if (!name || !Number.isSafeInteger(qty) || qty <= 0 ||
-     !Number.isFinite(price) || price <= 0) {
-
-  alert("Please enter valid sale details.");
-
-  return;
-
- }
-
- sales.unshift({
-
-  name: name,
-
-  qty: qty,
-
-  price: price,
-
-  total: qty * price,
-
-  date: new Date().toLocaleDateString()
-
- });
-
- $("saleName").value = "";
-
- $("saleQty").value = "";
-
- $("salePrice").value = "";
-
- saveData();
-
- alert("Sale recorded successfully!");
-
-});
-
-// EXPENSES
-
-$("saveExpense").addEventListener("click", function() {
-
- const name = $("expenseName").value.trim();
-
- const amount = Number($("expenseAmount").value);
-
- if (!name || !Number.isFinite(amount) || amount <= 0) {
-
-  alert("Please enter valid expense details.");
-
-  return;
-
- }
-
- expenses.unshift({
-
-  name: name,
-
-  amount: amount,
-
-  date: new Date().toLocaleDateString()
-
- });
-
- $("expenseName").value = "";
-
- $("expenseAmount").value = "";
-
- saveData();
-
- alert("Expense recorded successfully!");
-
-});
-
-// INVENTORY
-
-$("saveProduct").addEventListener("click", function() {
-
- const name = $("productName").value.trim();
-
- const qty = Number($("productQty").value);
-
- const price = Number($("productPrice").value);
-
- if (!name || !Number.isSafeInteger(qty) || qty < 0 ||
-     !Number.isFinite(price) || price <= 0) {
-
-  alert("Please enter valid product details.");
-
-  return;
-
- }
-
- products.push({
-
-  id: Date.now() + Math.random(),
-
-  name: name,
-
-  qty: qty,
-
-  price: price
-
- });
-
- $("productName").value = "";
-
- $("productQty").value = "";
-
- $("productPrice").value = "";
-
- saveData();
-
- alert("Product added successfully!");
-
-});
-
-// DELETE PRODUCT
-
-function deleteProduct(id) {
-
- if (!confirm("Are you sure you want to delete this product?")) {
-  return;
- }
-
- products = products.filter(product => product.id !== id);
-
- saveData();
-
-}
-
-// INVOICE GENERATOR
-
-$("generateInvoice").addEventListener("click", function() {
-
- const business = $("businessName").value.trim();
-
- const customer = $("customerName").value.trim();
-
- const product = $("invoiceProduct").value.trim();
-
- const qty = Number($("invoiceQty").value);
-
- const price = Number($("invoicePrice").value);
-
- if (!business || !customer || !product ||
-     !Number.isSafeInteger(qty) || qty <= 0 ||
-     !Number.isFinite(price) || price <= 0) {
-
-  alert("Please complete all invoice fields correctly.");
-
-  return;
-
- }
-
- const total = qty * price;
-
- const invoiceNumber = "SB-" + Date.now();
-
- $("invoiceResult").innerHTML = `
-
- <div class="invoice" id="printArea">
-
- <h2>${escapeHTML(business)}</h2>
-
- <h3>INVOICE</h3>
-
- <p><b>Invoice Number:</b> ${invoiceNumber}</p>
-
- <p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
-
- <hr>
-
- <p><b>Customer:</b> ${escapeHTML(customer)}</p>
-
- <h3>Invoice Details</h3>
-
- <p>Product: ${escapeHTML(product)}</p>
-
- <p>Quantity: ${qty}</p>
-
- <p>Unit Price: ${money(price)}</p>
-
- <hr>
-
- <h2>Total: ${money(total)}</h2>
-
- <p>Thank you for your business!</p>
-
- </div>
-
- <br>
-
- <button class="no-print" onclick="window.print()">
- Print / Save Invoice as PDF
- </button>
-
- `;
-
-});
-
-// DASHBOARD RENDERING
-
-function render() {
-
- const totalSales = sales.reduce((sum, item) => sum + Number(item.total || 0), 0);
-
- const totalExpenses = expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
-
- const profit = totalSales - totalExpenses;
-
- $("salesTotal").textContent = money(totalSales);
-
- $("expenseTotal").textContent = money(totalExpenses);
-
- $("profitTotal").textContent = money(profit);
-
- $("productTotal").textContent = products.length;
-
- // SALES HISTORY
-
- $("salesHistory").innerHTML = sales.map(item => `
-
- <tr>
-
- <td>${escapeHTML(item.name)}</td>
-
- <td>${Number(item.qty)}</td>
-
- <td>${money(item.total)}</td>
-
- <td>${escapeHTML(item.date)}</td>
-
- </tr>
-
- `).join("") || `<tr><td colspan="4">No sales recorded.</td></tr>`;
-
- // EXPENSE HISTORY
-
- $("expenseHistory").innerHTML = expenses.map(item => `
-
- <tr>
-
- <td>${escapeHTML(item.name)}</td>
-
- <td>${money(item.amount)}</td>
-
- <td>${escapeHTML(item.date)}</td>
-
- </tr>
-
- `).join("") || `<tr><td colspan="3">No expenses recorded.</td></tr>`;
-
- // INVENTORY
-
- $("inventoryList").innerHTML = products.map(item => `
-
- <tr>
-
- <td>${escapeHTML(item.name)}</td>
-
- <td>${Number(item.qty)}</td>
-
- <td>${money(item.price)}</td>
-
- <td class="${item.qty <= 5 ? "low-stock" : "success"}">
-
- ${item.qty <= 5 ? "Low Stock" : "In Stock"}
-
- </td>
-
- <td>
-
- <button class="danger" onclick="deleteProduct(${Number(item.id)})">
-
- Delete
-
- </button>
-
- </td>
-
- </tr>
-
- `).join("") || `<tr><td colspan="5">No products added.</td></tr>`;
-
- // RECENT TRANSACTIONS
-
- const transactions = [
-
-  ...sales.map(item => ({
-   name: item.name,
-   amount: item.total,
-   type: "Sale",
-   date: item.date
-  })),
-
-  ...expenses.map(item => ({
-   name: item.name,
-   amount: item.amount,
-   type: "Expense",
-   date: item.date
-  }))
-
- ];
-
- $("recent").innerHTML = transactions.slice(0, 8).map(item => `
-
- <p>
-
- <b>${item.type}:</b>
-
- ${escapeHTML(item.name)} —
-
- ${money(item.amount)}
-
- <small class="muted">${escapeHTML(item.date)}</small>
-
- </p>
-
- `).join("") || `<p class="empty">No transactions yet.</p>`;
-
- // STOCK ALERTS
-
- const lowStock = products.filter(item => item.qty <= 5);
-
- $("stockAlerts").innerHTML = lowStock.map(item => `
-
- <p class="low-stock">
-
- ${escapeHTML(item.name)} — Only ${Number(item.qty)} remaining.
-
- </p>
-
- `).join("") || `<p class="success">All products have sufficient stock.</p>`;
-
-}
-
-// INITIALIZE APPLICATION
-
-render();
-
-</script>
-
-</body>
-</html>
+ $("expenseTotal").textContent=
+  (e.complete?"":"≈ ")+money(e.total)+(e.complete?"
