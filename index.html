@@ -3,65 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#142d4e">
-<title>SmartBiz Manager | Version 1.2</title>
+<title>SmartBiz Manager V1.3</title>
+
 <style>
-:root{--primary:#142d4e;--secondary:#1769aa;--bg:#f3f5f9;--text:#202b3c;--muted:#64748b;--green:#15965c;--red:#c83d3d;--border:#e2e8f0}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
-header{background:var(--primary);color:#fff;padding:24px 5%}
-.header-content{max-width:1200px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}
-header h1{margin:0;font-size:28px}header p{color:#d7e1ed;margin:7px 0 0}
-.currency-box{min-width:230px}.currency-box label,.field label{display:block;font-size:13px;font-weight:bold;margin-bottom:7px}
-.currency-box select{width:100%;padding:12px;border:0;border-radius:8px}
-.container{max-width:1200px;margin:auto;padding:24px 16px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.card,.panel{background:#fff;border-radius:15px;padding:20px;box-shadow:0 3px 14px #00000008}
-.card h3{margin:0 0 14px;color:var(--muted);font-size:13px}.card strong{font-size:23px;overflow-wrap:anywhere}
-.navigation{display:flex;gap:8px;overflow-x:auto;padding:17px 0 12px;margin:8px 0 14px;scrollbar-width:thin}
-button{border:0;border-radius:8px;padding:12px 16px;background:var(--secondary);color:white;font-weight:bold;cursor:pointer}
-button:hover{opacity:.9}.navigation button{white-space:nowrap;flex:0 0 auto}.navigation button.active{background:var(--primary)}
-button.secondary{background:#e8eef5;color:var(--primary)}button.danger{background:var(--red)}button.small{padding:8px 10px;font-size:12px}
-.section{display:none}.section.active{display:block}.panel{margin-bottom:18px}.panel h2,.panel h3{margin-top:0}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.field{margin-bottom:12px}.field input,.field select,input,select{width:100%;padding:12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:#fff;color:var(--text)}
-.field input:focus,.field select:focus,input:focus,select:focus{outline:2px solid #1769aa35;border-color:var(--secondary)}
-.full{grid-column:1/-1}.muted{color:var(--muted)}.success{color:var(--green)}.warning{color:#9a6500}.low{color:var(--red);font-weight:bold}
-.table-wrap{overflow-x:auto;width:100%}table{width:100%;border-collapse:collapse;min-width:540px}
-th,td{text-align:left;padding:12px;border-bottom:1px solid var(--border);vertical-align:top}
-th{font-size:12px;color:var(--muted);white-space:nowrap}
-.empty{padding:14px 0;color:var(--muted)}
-.notice{padding:12px 14px;border-radius:9px;background:#eef5fb;color:#244665;margin:12px 0;line-height:1.5}
-.invoice{border:1px solid var(--border);padding:24px;border-radius:10px;margin-top:18px;background:#fff}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.inline>*{flex:1}
-.statline{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)}
-footer{text-align:center;color:var(--muted);font-size:13px;padding:25px}
-@media(max-width:850px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:600px){
- header{padding:20px 15px}.header-content{display:block}.currency-box{margin-top:18px}
- .container{padding:15px 11px}.card{padding:15px}.card strong{font-size:18px}.card h3{font-size:11px}
- .panel{padding:15px}.form-grid{grid-template-columns:1fr}.navigation{margin-right:-3px}
- button{padding:11px 13px}table{font-size:13px;min-width:520px}
+:root {
+  --primary: #17365d;
+  --secondary: #2476ad;
+  --background: #f1f3f8;
+  --white: #ffffff;
+  --text: #263238;
+  --muted: #718096;
+  --danger: #c0392b;
+  --success: #18864b;
 }
-@media print{
- body *{visibility:hidden!important}#printArea,#printArea *{visibility:visible!important}
- #printArea{position:absolute;left:0;top:0;width:100%;border:0;box-shadow:none}
- .no-print{display:none!important}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+header {
+  background: var(--primary);
+  color: white;
+  padding: 24px 18px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+}
+
+header p {
+  margin: 0 0 18px;
+  color: #dce6f1;
+}
+
+header label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+header select {
+  width: 100%;
+  max-width: 400px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 18px;
+}
+
+input, select, textarea, button {
+  font: inherit;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d6dce5;
+  border-radius: 8px;
+  background: white;
+  margin: 6px 0 14px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.primary {
+  background: var(--secondary);
+  color: white;
+}
+
+.secondary {
+  background: #e1e8f0;
+  color: var(--primary);
+}
+
+.danger {
+  background: var(--danger);
+  color: white;
+}
+
+.success {
+  background: var(--success);
+  color: white;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+nav button {
+  background: #2876aa;
+  color: white;
+  flex: 1 1 auto;
+}
+
+nav button.active {
+  background: var(--primary);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.card, .panel {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.04);
+  margin-bottom: 16px;
+}
+
+.card small {
+  color: var(--muted);
+  font-weight: bold;
+}
+
+.card h2 {
+  font-size: 23px;
+  margin-bottom: 0;
+  overflow-wrap: anywhere;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 14px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 650px;
+}
+
+th, td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #e7eaf0;
+}
+
+th {
+  background: #f5f7fa;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.notice {
+  background: #eaf3fc;
+  border-left: 4px solid var(--secondary);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 25px;
+}
+
+@media(max-width: 800px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 520px) {
+  header h1 {
+    font-size: 24px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  .cards {
+    gap: 9px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  .card h2 {
+    font-size: 19px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full {
+    grid-column: auto;
+  }
+
+  nav button {
+    flex: 1 1 30%;
+    font-size: 13px;
+    padding: 11px 7px;
+  }
+}
+
+@media print {
+  header, nav, .no-print, footer {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .panel {
+    box-shadow: none;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <header>
- <div class="header-content">
-  <div>
-   <h1>SmartBiz Manager</h1>
-   <p>Global Business Management Platform · Version 1.2</p>
-  </div>
-  <div class="currency-box">
-   <label for="currencySelect">Business / Display Currency</label>
-   <select id="currencySelect">
+  <h1 id="appTitle">SmartBiz Manager</h1>
+  <p>Global Business Management Platform · Version 1.3</p>
+
+  <label for="currency">Business Currency</label>
+  <select id="currency" onchange="changeCurrency()">
     <option value="NGN">NGN - Nigerian Naira</option>
     <option value="USD">USD - US Dollar</option>
     <option value="GBP">GBP - British Pound</option>
@@ -77,512 +297,608 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:25px}
     <option value="CNY">CNY - Chinese Yuan</option>
     <option value="AED">AED - UAE Dirham</option>
     <option value="NZD">NZD - New Zealand Dollar</option>
-   </select>
-  </div>
- </div>
+  </select>
 </header>
 
-<main class="container">
+<div class="container">
 
- <div class="cards">
-  <div class="card"><h3>TOTAL SALES</h3><strong id="salesTotal">—</strong></div>
-  <div class="card"><h3>TOTAL EXPENSES</h3><strong id="expenseTotal">—</strong></div>
-  <div class="card"><h3>NET PROFIT</h3><strong id="profitTotal">—</strong></div>
-  <div class="card"><h3>PRODUCTS</h3><strong id="productTotal">0</strong></div>
- </div>
+<nav class="no-print">
+  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
+  <button onclick="showPage('sales',this)">Sales</button>
+  <button onclick="showPage('expenses',this)">Expenses</button>
+  <button onclick="showPage('inventory',this)">Inventory</button>
+  <button onclick="showPage('customers',this)">Customers</button>
+  <button onclick="showPage('invoices',this)">Invoices</button>
+  <button onclick="showPage('reports',this)">Reports</button>
+  <button onclick="showPage('settings',this)">Settings</button>
+</nav>
 
- <nav class="navigation no-print" aria-label="Main navigation">
-  <button class="active" data-tab="dashboard">Dashboard</button>
-  <button data-tab="sales">Sales</button>
-  <button data-tab="expenses">Expenses</button>
-  <button data-tab="inventory">Inventory</button>
-  <button data-tab="customers">Customers</button>
-  <button data-tab="invoices">Invoices</button>
-  <button data-tab="reports">Reports</button>
-  <button data-tab="converter">Currency Converter</button>
-  <button data-tab="backup">Backup</button>
- </nav>
+<!-- DASHBOARD -->
 
- <section id="dashboard" class="section active">
-  <div class="panel">
-   <h2>Welcome to SmartBiz</h2>
-   <p class="muted">Manage customers, sales, expenses, inventory and invoices in one place.</p>
-   <h3>Recent Transactions</h3>
-   <div id="recent"></div>
+<section id="dashboard">
+
+  <div class="cards">
+    <div class="card">
+      <small>TOTAL SALES</small>
+      <h2 id="totalSales">0</h2>
+    </div>
+
+    <div class="card">
+      <small>TOTAL EXPENSES</small>
+      <h2 id="totalExpenses">0</h2>
+    </div>
+
+    <div class="card">
+      <small>NET PROFIT</small>
+      <h2 id="netProfit">0</h2>
+    </div>
+
+    <div class="card">
+      <small>PRODUCTS</small>
+      <h2 id="productCount">0</h2>
+    </div>
   </div>
 
   <div class="panel">
-   <h3>Inventory Alerts</h3>
-   <div id="stockAlerts"></div>
+    <h2 id="welcome">Welcome to SmartBiz</h2>
+    <p class="muted">
+      Manage your sales, expenses, inventory, customers and invoices in one place.
+    </p>
+
+    <h3>Recent Transactions</h3>
+    <div id="recentTransactions"></div>
   </div>
 
   <div class="panel">
-   <h3>Data and currency notes</h3>
-   <p class="muted">Your records are saved in this browser on this device. Export a backup regularly. Amounts are stored with their original currency; changing the display currency does not rewrite transaction records.</p>
-   <div id="rateStatus" class="notice">Exchange-rate status will appear here.</div>
-  </div>
- </section>
-
- <section id="sales" class="section">
-  <div class="panel">
-   <h2>Record New Sale</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="saleName">Product / Service</label>
-     <input id="saleName" placeholder="e.g. Rice">
-    </div>
-    <div class="field">
-     <label for="saleQty">Quantity</label>
-     <input id="saleQty" type="number" min="1" step="1" placeholder="Quantity">
-    </div>
-    <div class="field">
-     <label for="salePrice">Unit Price (<span class="currencyLabel">NGN</span>)</label>
-     <input id="salePrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
-    </div>
-    <div class="field">
-     <label for="saleCustomer">Customer (optional)</label>
-     <select id="saleCustomer">
-      <option value="">Walk-in / not selected</option>
-     </select>
-    </div>
-   </div>
-   <button id="saveSale">Save Sale</button>
+    <h3>Business Overview</h3>
+    <p id="stockSummary"></p>
+    <p id="customerSummary"></p>
   </div>
 
-  <div class="panel">
-   <h3>Sales History</h3>
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr>
-       <th>Product</th><th>Customer</th><th>Qty</th>
-       <th>Total</th><th>Currency</th><th>Date</th>
-      </tr>
-     </thead>
-     <tbody id="salesHistory"></tbody>
-    </table>
-   </div>
-  </div>
- </section>
+</section>
 
- <section id="expenses" class="section">
+<!-- SALES -->
+
+<section id="sales" class="hidden">
+
   <div class="panel">
-   <h2>Record Business Expense</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="expenseName">Description</label>
-     <input id="expenseName" placeholder="e.g. Transport">
-    </div>
-    <div class="field">
-     <label for="expenseAmount">Amount (<span class="currencyLabel">NGN</span>)</label>
-     <input id="expenseAmount" type="number" min="0.01" step="0.01" placeholder="Amount">
-    </div>
-   </div>
-   <button id="saveExpense">Save Expense</button>
+    <h2>Record a Sale</h2>
+
+    <form id="saleForm" class="form-grid">
+
+      <input type="hidden" id="saleEditId">
+
+      <div>
+        <label>Product</label>
+        <select id="saleProduct" required></select>
+      </div>
+
+      <div>
+        <label>Quantity</label>
+        <input type="number" id="saleQty" min="1" step="1" required>
+      </div>
+
+      <div>
+        <label>Unit Selling Price</label>
+        <input type="number" id="salePrice" min="0" step="0.01" required>
+      </div>
+
+      <div>
+        <label>Customer</label>
+        <select id="saleCustomer">
+          <option value="">Walk-in customer</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label>Date</label>
+        <input type="date" id="saleDate" required>
+      </div>
+
+      <div class="full">
+        <button class="primary" type="submit">Save Sale</button>
+        <button class="secondary hidden" type="button" id="cancelSaleEdit" onclick="cancelEdit('sale')">Cancel Edit</button>
+      </div>
+
+    </form>
   </div>
 
   <div class="panel">
-   <h3>Expense History</h3>
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr><th>Description</th><th>Amount</th><th>Currency</th><th>Date</th></tr>
-     </thead>
-     <tbody id="expenseHistory"></tbody>
-    </table>
-   </div>
-  </div>
- </section>
-
- <section id="inventory" class="section">
-  <div class="panel">
-   <h2>Add New Product</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="productName">Product Name</label>
-     <input id="productName" placeholder="Product name">
-    </div>
-    <div class="field">
-     <label for="productQty">Quantity in Stock</label>
-     <input id="productQty" type="number" min="0" step="1" placeholder="Available stock">
-    </div>
-    <div class="field">
-     <label for="productPrice">Selling Price (<span class="currencyLabel">NGN</span>)</label>
-     <input id="productPrice" type="number" min="0.01" step="0.01" placeholder="Selling price">
-    </div>
-   </div>
-   <button id="saveProduct">Add Product</button>
+    <h2>Sales History</h2>
+    <input type="search" id="salesSearch" placeholder="Search sales..." oninput="renderSales()">
+    <div id="salesTable"></div>
   </div>
 
-  <div class="panel">
-   <h3>Inventory List</h3>
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr>
-       <th>Product</th><th>Qty</th><th>Price</th>
-       <th>Original Currency</th><th>Status</th><th>Action</th>
-      </tr>
-     </thead>
-     <tbody id="inventoryList"></tbody>
-    </table>
-   </div>
-  </div>
- </section>
+</section>
 
- <section id="customers" class="section">
+<!-- EXPENSES -->
+
+<section id="expenses" class="hidden">
+
   <div class="panel">
-   <h2>Customer Management</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="customerFullName">Customer Name</label>
-     <input id="customerFullName" placeholder="Full name">
-    </div>
-    <div class="field">
-     <label for="customerPhone">Phone Number</label>
-     <input id="customerPhone" type="tel" placeholder="Phone number">
-    </div>
-    <div class="field">
-     <label for="customerEmail">Email (optional)</label>
-     <input id="customerEmail" type="email" placeholder="Email address">
-    </div>
-    <div class="field">
-     <label for="customerAddress">Address (optional)</label>
-     <input id="customerAddress" placeholder="Address">
-    </div>
-   </div>
-   <button id="saveCustomer">Save Customer</button>
+    <h2>Record Expense</h2>
+
+    <form id="expenseForm" class="form-grid">
+
+      <input type="hidden" id="expenseEditId">
+
+      <div>
+        <label>Expense Description</label>
+        <input type="text" id="expenseName" required>
+      </div>
+
+      <div>
+        <label>Amount</label>
+        <input type="number" id="expenseAmount" min="0.01" step="0.01" required>
+      </div>
+
+      <div>
+        <label>Category</label>
+        <select id="expenseCategory">
+          <option>Transport</option>
+          <option>Rent</option>
+          <option>Utilities</option>
+          <option>Salary</option>
+          <option>Marketing</option>
+          <option>Supplies</option>
+          <option>Maintenance</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Date</label>
+        <input type="date" id="expenseDate" required>
+      </div>
+
+      <div class="full">
+        <button class="primary" type="submit">Save Expense</button>
+        <button class="secondary hidden" type="button" id="cancelExpenseEdit" onclick="cancelEdit('expense')">Cancel Edit</button>
+      </div>
+
+    </form>
   </div>
 
   <div class="panel">
-   <h3>Customer Directory</h3>
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr><th>Name</th><th>Phone</th><th>Email</th><th>Purchases</th><th>Action</th></tr>
-     </thead>
-     <tbody id="customerList"></tbody>
-    </table>
-   </div>
+    <h2>Expense History</h2>
+    <input type="search" id="expenseSearch" placeholder="Search expenses..." oninput="renderExpenses()">
+    <div id="expensesTable"></div>
+  </div>
+
+</section>
+
+<!-- INVENTORY -->
+
+<section id="inventory" class="hidden">
+
+  <div class="panel">
+    <h2>Add Inventory Product</h2>
+
+    <form id="productForm" class="form-grid">
+
+      <input type="hidden" id="productEditId">
+
+      <div>
+        <label>Product Name</label>
+        <input type="text" id="productName" required>
+      </div>
+
+      <div>
+        <label>Product SKU</label>
+        <input type="text" id="productSKU">
+      </div>
+
+      <div>
+        <label>Cost Price</label>
+        <input type="number" id="productCost" min="0" step="0.01" required>
+      </div>
+
+      <div>
+        <label>Selling Price</label>
+        <input type="number" id="productSelling" min="0" step="0.01" required>
+      </div>
+
+      <div>
+        <label>Stock Quantity</label>
+        <input type="number" id="productStock" min="0" step="1" required>
+      </div>
+
+      <div class="full">
+        <button class="primary" type="submit">Save Product</button>
+        <button class="secondary hidden" type="button" id="cancelProductEdit" onclick="cancelEdit('product')">Cancel Edit</button>
+      </div>
+
+    </form>
   </div>
 
   <div class="panel">
-   <h3>Selected Customer History</h3>
-   <div class="field">
-    <label for="historyCustomer">Choose customer</label>
-    <select id="historyCustomer">
-     <option value="">Select a customer</option>
-    </select>
-   </div>
-   <div id="customerHistory" class="muted">Choose a customer to view linked sales and invoices.</div>
+    <h2>Inventory List</h2>
+    <input type="search" id="productSearch" placeholder="Search products..." oninput="renderInventory()">
+    <div id="inventoryTable"></div>
   </div>
- </section>
 
- <section id="invoices" class="section">
-  <div class="panel">
-   <h2>Create Invoice</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="businessName">Business Name</label>
-     <input id="businessName" placeholder="Your business name">
-    </div>
-    <div class="field">
-     <label for="invoiceCustomer">Customer</label>
-     <select id="invoiceCustomer">
-      <option value="">Choose saved customer or enter below</option>
-     </select>
-    </div>
-    <div class="field">
-     <label for="invoiceCustomerName">Customer Name (if not saved)</label>
-     <input id="invoiceCustomerName" placeholder="Customer name">
-    </div>
-    <div class="field">
-     <label for="invoiceProduct">Product / Service</label>
-     <input id="invoiceProduct" placeholder="Description">
-    </div>
-    <div class="field">
-     <label for="invoiceQty">Quantity</label>
-     <input id="invoiceQty" type="number" min="1" step="1" value="1">
-    </div>
-    <div class="field">
-     <label for="invoicePrice">Unit Price (<span class="currencyLabel">NGN</span>)</label>
-     <input id="invoicePrice" type="number" min="0.01" step="0.01" placeholder="Unit price">
-    </div>
-   </div>
-   <button id="generateInvoice">Generate and Save Invoice</button>
-   <div id="invoiceResult"></div>
-  </div>
+</section>
+
+<!-- CUSTOMERS -->
+
+<section id="customers" class="hidden">
 
   <div class="panel">
-   <h3>Saved Invoice History</h3>
-   <div class="table-wrap">
-    <table>
-     <thead>
-      <tr>
-       <th>Invoice No.</th><th>Customer</th><th>Total</th>
-       <th>Currency</th><th>Date</th><th>Action</th>
-      </tr>
-     </thead>
-     <tbody id="invoiceHistory"></tbody>
-    </table>
-   </div>
-  </div>
- </section>
+    <h2>Add Customer</h2>
 
- <section id="reports" class="section">
+    <form id="customerForm" class="form-grid">
+
+      <input type="hidden" id="customerEditId">
+
+      <div>
+        <label>Customer Name</label>
+        <input type="text" id="customerName" required>
+      </div>
+
+      <div>
+        <label>Phone Number</label>
+        <input type="tel" id="customerPhone">
+      </div>
+
+      <div>
+        <label>Email Address</label>
+        <input type="email" id="customerEmail">
+      </div>
+
+      <div>
+        <label>Address</label>
+        <input type="text" id="customerAddress">
+      </div>
+
+      <div class="full">
+        <button class="primary" type="submit">Save Customer</button>
+        <button class="secondary hidden" type="button" id="cancelCustomerEdit" onclick="cancelEdit('customer')">Cancel Edit</button>
+      </div>
+
+    </form>
+  </div>
+
   <div class="panel">
-   <h2>Financial Reports</h2>
-   <div class="form-grid">
-    <div class="field">
-     <label for="reportPeriod">Period</label>
-     <select id="reportPeriod">
-      <option value="today">Today</option>
-      <option value="7">Last 7 days</option>
-      <option value="30" selected>Last 30 days</option>
-      <option value="month">This month</option>
-      <option value="all">All records</option>
-     </select>
-    </div>
-   </div>
-   <button id="runReport">Generate Report</button>
-   <div id="reportResult"></div>
+    <h2>Customer Records</h2>
+    <input type="search" id="customerSearch" placeholder="Search customers..." oninput="renderCustomers()">
+    <div id="customersTable"></div>
   </div>
- </section>
 
- <section id="converter" class="section">
+</section>
+
+<!-- INVOICES -->
+
+<section id="invoices" class="hidden">
+
   <div class="panel">
-   <h2>Currency Converter</h2>
-   <p class="muted">Uses a public exchange-rate service when internet access is available. This is an estimate, not a payment or bank settlement rate.</p>
-   <div class="form-grid">
-    <div class="field">
-     <label for="convertAmount">Amount</label>
-     <input id="convertAmount" type="number" min="0" step="any" value="100">
-    </div>
-    <div class="field">
-     <label for="fromCurrency">From</label>
-     <select id="fromCurrency"></select>
-    </div>
-    <div class="field">
-     <label for="toCurrency">To</label>
-     <select id="toCurrency"></select>
-    </div>
-   </div>
-   <button id="convertButton">Convert</button>
-   <div id="conversionResult" class="notice" aria-live="polite">Enter an amount and select currencies.</div>
-  </div>
- </section>
+    <h2>Create Invoice</h2>
 
- <section id="backup" class="section">
+    <form id="invoiceForm" class="form-grid">
+
+      <div>
+        <label>Customer</label>
+        <select id="invoiceCustomer" required></select>
+      </div>
+
+      <div>
+        <label>Invoice Number</label>
+        <input type="text" id="invoiceNumber" required>
+      </div>
+
+      <div>
+        <label>Description</label>
+        <input type="text" id="invoiceDescription" required>
+      </div>
+
+      <div>
+        <label>Amount</label>
+        <input type="number" id="invoiceAmount" min="0.01" step="0.01" required>
+      </div>
+
+      <div>
+        <label>Due Date</label>
+        <input type="date" id="invoiceDueDate" required>
+      </div>
+
+      <div class="full">
+        <button class="primary" type="submit">Create Invoice</button>
+      </div>
+
+    </form>
+  </div>
+
   <div class="panel">
-   <h2>Backup and Restore</h2>
-   <p>Download a copy of your SmartBiz records. Keep the backup somewhere safe. Restoring a backup replaces the records currently in this browser.</p>
-   <div class="actions">
-    <button id="exportBackup">Download Backup (JSON)</button>
-    <button class="secondary" id="exportCSV">Export Sales and Expenses (CSV)</button>
-   </div>
-   <hr style="border:0;border-top:1px solid var(--border);margin:22px 0">
-   <div class="field">
-    <label for="backupFile">Choose a SmartBiz JSON backup</label>
-    <input id="backupFile" type="file" accept=".json,application/json">
-   </div>
-   <button class="danger" id="importBackup">Restore Backup</button>
-   <div class="notice">Privacy note: this version stores data locally in your browser. It does not synchronise between devices or provide cloud accounts. Do not enter sensitive customer information on a shared device.</div>
+    <h2>Invoice History</h2>
+    <div id="invoiceTable"></div>
   </div>
- </section>
 
-</main>
+</section>
 
-<footer>SmartBiz Manager · Global Edition · Version 1.2</footer>
+<!-- REPORTS -->
+
+<section id="reports" class="hidden">
+
+  <div class="panel">
+    <h2>Financial Reports</h2>
+
+    <p>These reports use the selected business currency.</p>
+
+    <div id="reportContent"></div>
+
+    <button class="primary no-print" onclick="window.print()">Print Report</button>
+  </div>
+
+</section>
+
+<!-- SETTINGS -->
+
+<section id="settings" class="hidden">
+
+  <div class="panel">
+    <h2>Business Profile</h2>
+
+    <form id="settingsForm">
+
+      <label>Business Name</label>
+      <input type="text" id="businessName" required>
+
+      <label>Business Phone</label>
+      <input type="tel" id="businessPhone">
+
+      <label>Business Email</label>
+      <input type="email" id="businessEmail">
+
+      <label>Business Address</label>
+      <textarea id="businessAddress"></textarea>
+
+      <button class="primary" type="submit">Save Business Profile</button>
+
+    </form>
+  </div>
+
+  <div class="panel">
+    <h2>Data Management</h2>
+
+    <p>Download a backup of your business records.</p>
+
+    <button class="success" onclick="backupData()">Download Backup</button>
+
+    <hr>
+
+    <label>Restore Backup</label>
+    <input type="file" id="restoreFile" accept=".json">
+
+    <button class="primary" onclick="restoreData()">Restore Data</button>
+
+    <p class="muted">
+      Restoring a backup replaces the current records. Download a backup first.
+    </p>
+  </div>
+
+</section>
+
+</div>
+
+<footer>
+  SmartBiz Manager V1.3 · Your business, organised.
+</footer>
 
 <script>
-"use strict";
+const STORAGE_KEY = "smartbiz_manager_v13";
 
-const KEYS={
- sales:"sales",
- expenses:"expenses",
- products:"products",
- currency:"currency",
- customers:"smartbiz_customers_v12",
- invoices:"smartbiz_invoices_v12"
+const defaultData = {
+  currency: "NGN",
+  business: {
+    name: "SmartBiz",
+    phone: "",
+    email: "",
+    address: ""
+  },
+  sales: [],
+  expenses: [],
+  products: [],
+  customers: [],
+  invoices: []
 };
 
-const CURRENCIES=["NGN","USD","GBP","EUR","CAD","AUD","GHS","KES","ZAR","INR","JPY","CHF","CNY","AED","NZD"];
+let data = loadData();
 
-const $=id=>document.getElementById(id);
+function loadData() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-function readArray(key){
- try{
-  const v=JSON.parse(localStorage.getItem(key)||"[]");
-  return Array.isArray(v)?v:[];
- }catch(e){
-  return [];
- }
+    if (!saved) return structuredClone(defaultData);
+
+    const parsed = JSON.parse(saved);
+
+    return {
+      ...structuredClone(defaultData),
+      ...parsed,
+      business: {
+        ...defaultData.business,
+        ...(parsed.business || {})
+      },
+      sales: Array.isArray(parsed.sales) ? parsed.sales : [],
+      expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
+      products: Array.isArray(parsed.products) ? parsed.products : [],
+      customers: Array.isArray(parsed.customers) ? parsed.customers : [],
+      invoices: Array.isArray(parsed.invoices) ? parsed.invoices : []
+    };
+
+  } catch (error) {
+    alert("Saved data could not be read. Your previous data has not been overwritten.");
+    return structuredClone(defaultData);
+  }
 }
 
-function safeSave(key,value){
- try{
-  localStorage.setItem(key,JSON.stringify(value));
-  return true;
- }catch(e){
-  alert("Could not save data. Your browser storage may be full. Export a backup and free some space.");
-  return false;
- }
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  renderAll();
 }
 
-function esc(v){
- return String(v??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
- }[c]));
+function id() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-let currency=CURRENCIES.includes(localStorage.getItem(KEYS.currency))
- ?localStorage.getItem(KEYS.currency)
- :"NGN";
-
-let sales=readArray(KEYS.sales);
-let expenses=readArray(KEYS.expenses);
-let products=readArray(KEYS.products);
-let customers=readArray(KEYS.customers);
-let invoices=readArray(KEYS.invoices);
-
-let rates={};
-let rateDate="";
-let ratesReady=false;
-
-function migrateLegacy(){
- // Older V1.1 entries did not store currency. Preserve their numeric values and
- // assign the currency selected at upgrade time; do not silently convert them.
- let changed=false;
-
- for(const list of [sales,expenses,products]){
-  list.forEach(x=>{
-   if(!x.currency){
-    x.currency=currency;
-    changed=true;
-   }
-  });
- }
-
- if(changed){
-  safeSave(KEYS.sales,sales);
-  safeSave(KEYS.expenses,expenses);
-  safeSave(KEYS.products,products);
- }
+function today() {
+  const d = new Date();
+  return [
+    d.getFullYear(),
+    String(d.getMonth() + 1).padStart(2, "0"),
+    String(d.getDate()).padStart(2, "0")
+  ].join("-");
 }
 
-migrateLegacy();
-
-function persist(){
- return safeSave(KEYS.sales,sales)
- &&safeSave(KEYS.expenses,expenses)
- &&safeSave(KEYS.products,products)
- &&safeSave(KEYS.customers,customers)
- &&safeSave(KEYS.invoices,invoices)
- &&safeSave(KEYS.currency,currency);
+function money(value) {
+  return new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: data.currency || "NGN",
+    maximumFractionDigits: 2
+  }).format(Number(value) || 0);
 }
 
-function money(value,code=currency){
- const n=Number(value)||0;
- try{
-  return new Intl.NumberFormat("en",{
-   style:"currency",
-   currency:code,
-   maximumFractionDigits:2
-  }).format(n);
- }catch(e){
-  return code+" "+n.toFixed(2);
- }
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
-function dateISO(d=new Date()){
- return d.toISOString().slice(0,10);
-}
-
-function showTab(tab){
- document.querySelectorAll(".section").forEach(s=>{
-  s.classList.toggle("active",s.id===tab);
- });
-
- document.querySelectorAll(".navigation button").forEach(b=>{
-  b.classList.toggle("active",b.dataset.tab===tab);
- });
-
- window.scrollTo({top:0,behavior:"smooth"});
-}
-
-document.querySelectorAll(".navigation button").forEach(b=>{
- b.addEventListener("click",()=>showTab(b.dataset.tab));
-});
-
-function customerName(id){
- return customers.find(c=>String(c.id)===String(id))?.name||"Walk-in";
-}
-
-function updateCustomerSelects(){
- const options=customers.map(c=>
-  `<option value="${esc(c.id)}">${esc(c.name)}${c.phone?" · "+esc(c.phone):""}</option>`
- ).join("");
-
- $("saleCustomer").innerHTML=
-  '<option value="">Walk-in / not selected</option>'+options;
-
- $("invoiceCustomer").innerHTML=
-  '<option value="">Choose saved customer or enter below</option>'+options;
-
- $("historyCustomer").innerHTML=
-  '<option value="">Select a customer</option>'+options;
-}
-
-function recordDate(item){
- if(item.isoDate)return item.isoDate;
- const parsed=new Date(item.date||"");
- return isNaN(parsed)?dateISO():dateISO(parsed);
-}
-
-function render(){
-
- $("currencySelect").value=currency;
-
- document.querySelectorAll(".currencyLabel").forEach(x=>{
-  x.textContent=currency;
- });
-
- // Convert stored records for display only when a usable current rate is available.
- const convertDisplay=(amount,from)=>{
-  if(from===currency)return money(amount);
-  const r=rates[from]?.[currency];
-  return r?money(Number(amount)*r):money(amount,from)+" (rate unavailable)";
- };
-
- const sumByCurrency=(items,field)=>{
-  const totals={};
-
-  items.forEach(x=>{
-   const c=x.currency||currency;
-   totals[c]=(totals[c]||0)+Number(x[field]||0);
+function showPage(page, button) {
+  document.querySelectorAll("section").forEach(section => {
+    section.classList.add("hidden");
   });
 
-  let total=0;
-  let complete=true;
+  document.getElementById(page).classList.remove("hidden");
 
-  Object.entries(totals).forEach(([c,v])=>{
-   if(c===currency)total+=v;
-   else if(rates[c]?.[currency])total+=v*rates[c][currency];
-   else complete=false;
+  document.querySelectorAll("nav button").forEach(btn => {
+    btn.classList.remove("active");
   });
 
-  return {total,complete,totals};
- };
+  button.classList.add("active");
 
- const s=sumByCurrency(sales,"total");
- const e=sumByCurrency(expenses,"amount");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  renderAll();
+}
 
- $("salesTotal").textContent=
-  (s.complete?"":"≈ ")+money(s.total)+(s.complete?"":" *");
+function changeCurrency() {
+  data.currency = document.getElementById("currency").value;
+  saveData();
+}
 
- $("expenseTotal").textContent=
-  (e.complete?"":"≈ ")+money(e.total)+(e.complete?"
+function setDefaultDates() {
+  document.getElementById("saleDate").value = today();
+  document.getElementById("expenseDate").value = today();
+  document.getElementById("invoiceDueDate").value = today();
+}
+
+function renderDashboard() {
+  const sales = data.sales.reduce((sum, item) => sum + Number(item.total), 0);
+  const expenses = data.expenses.reduce((sum, item) => sum + Number(item.amount), 0);
+
+  document.getElementById("totalSales").textContent = money(sales);
+  document.getElementById("totalExpenses").textContent = money(expenses);
+  document.getElementById("netProfit").textContent = money(sales - expenses);
+  document.getElementById("productCount").textContent = data.products.length;
+
+  document.getElementById("welcome").textContent =
+    "Welcome to " + (data.business.name || "SmartBiz");
+
+  document.getElementById("stockSummary").textContent =
+    "Total inventory items: " + data.products.length;
+
+  document.getElementById("customerSummary").textContent =
+    "Registered customers: " + data.customers.length;
+
+  const recent = [...data.sales.map(x => ({
+    type: "Sale",
+    name: x.productName,
+    amount: x.total,
+    date: x.date
+  })), ...data.expenses.map(x => ({
+    type: "Expense",
+    name: x.name,
+    amount: x.amount,
+    date: x.date
+  }))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+
+  document.getElementById("recentTransactions").innerHTML =
+    recent.length ? `
+    <div class="table-wrap">
+    <table>
+      <tr><th>Type</th><th>Description</th><th>Date</th><th>Amount</th></tr>
+      ${recent.map(item => `
+        <tr>
+          <td>${escapeHTML(item.type)}</td>
+          <td>${escapeHTML(item.name)}</td>
+          <td>${escapeHTML(item.date)}</td>
+          <td>${money(item.amount)}</td>
+        </tr>
+      `).join("")}
+    </table>
+    </div>` : "<p class='muted'>No transactions recorded yet.</p>";
+}
+
+function updateSelects() {
+  document.getElementById("saleProduct").innerHTML =
+    '<option value="">Select product</option>' +
+    data.products.map(p =>
+      `<option value="${p.id}">${escapeHTML(p.name)} (Stock: ${p.stock})</option>`
+    ).join("");
+
+  const customerOptions = data.customers.map(c =>
+    `<option value="${c.id}">${escapeHTML(c.name)}</option>`
+  ).join("");
+
+  document.getElementById("saleCustomer").innerHTML =
+    '<option value="">Walk-in customer</option>' + customerOptions;
+
+  document.getElementById("invoiceCustomer").innerHTML =
+    '<option value="">Select customer</option>' + customerOptions;
+}
+
+function renderSales() {
+  const search = (document.getElementById("salesSearch").value || "").toLowerCase();
+
+  const rows = data.sales.filter(s =>
+    `${s.productName} ${s.date} ${s.customerName}`.toLowerCase().includes(search)
+  );
+
+  document.getElementById("salesTable").innerHTML =
+    rows.length ? `
+    <div class="table-wrap">
+    <table>
+      <tr>
+        <th>Date</th><th>Product</th><th>Customer</th>
+        <th>Qty</th><th>Total</th><th>Actions</th>
+      </tr>
+      ${rows.map(s => `
+        <tr>
+          <td>${escapeHTML(s.date)}</td>
+          <td>${escapeHTML(s.productName)}</td>
+          <td>${escapeHTML(s.customerName || "Walk-in")}</td>
+          <td>${s.qty}</td>
+          <td>${money(s.total)}</td>
+          <td class="actions">
+            <button class="secondary" onclick="editRecord('sale','${s.id}')">Edit</button>
+            <button class="danger" onclick="deleteRecord('sale','${s.id}')">Delete</button>
+          </td>
+        </tr>
+      `).join("")}
+    </table>
+    </div>` : "<p>No sales found.</p>";
+}
+
+function renderExpenses() {
+  const search = (document.getElementById("expenseSearch").value || "").toLowerCase();
+
+  const rows = data.expenses.filter(e =>
+    `${e.name} ${e.category} ${e.date}`.toLowerCase().includes(search)
+  );
+
+  document.getElementById("expensesTable").innerHTML =
+    rows.length ? `
+    <
