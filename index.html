@@ -7,268 +7,260 @@
 
 <style>
 :root {
-  --primary: #17365d;
-  --secondary: #2476ad;
-  --background: #f1f3f8;
-  --white: #ffffff;
-  --text: #263238;
-  --muted: #718096;
-  --danger: #c0392b;
-  --success: #18864b;
+  --primary:#17365d;
+  --secondary:#2876aa;
+  --background:#f1f3f8;
+  --white:#fff;
+  --text:#263238;
+  --muted:#718096;
+  --danger:#c0392b;
+  --success:#18864b;
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing:border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: var(--background);
-  color: var(--text);
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--background);
+  color:var(--text);
 }
 
 header {
-  background: var(--primary);
-  color: white;
-  padding: 24px 18px;
+  background:var(--primary);
+  color:white;
+  padding:25px 18px;
 }
 
 header h1 {
-  margin: 0 0 8px;
-  font-size: 28px;
+  margin:0 0 8px;
+  font-size:28px;
 }
 
 header p {
-  margin: 0 0 18px;
-  color: #dce6f1;
+  color:#dce6f1;
+  margin:0 0 20px;
 }
 
 header label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 7px;
-}
-
-header select {
-  width: 100%;
-  max-width: 400px;
+  display:block;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
 .container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 18px;
+  max-width:1200px;
+  margin:auto;
+  padding:18px;
 }
 
-input, select, textarea, button {
-  font: inherit;
+input,select,textarea,button {
+  font:inherit;
 }
 
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d6dce5;
-  border-radius: 8px;
-  background: white;
-  margin: 6px 0 14px;
+input,select,textarea {
+  width:100%;
+  padding:12px;
+  border:1px solid #d6dce5;
+  border-radius:8px;
+  margin:6px 0 14px;
+  background:white;
 }
 
 textarea {
-  min-height: 80px;
-  resize: vertical;
+  min-height:80px;
 }
 
 button {
-  border: 0;
-  border-radius: 8px;
-  padding: 12px 16px;
-  cursor: pointer;
-  font-weight: bold;
+  border:0;
+  border-radius:8px;
+  padding:12px 16px;
+  cursor:pointer;
+  font-weight:bold;
 }
 
 .primary {
-  background: var(--secondary);
-  color: white;
+  background:var(--secondary);
+  color:white;
 }
 
 .secondary {
-  background: #e1e8f0;
-  color: var(--primary);
+  background:#e1e8f0;
+  color:var(--primary);
 }
 
 .danger {
-  background: var(--danger);
-  color: white;
+  background:var(--danger);
+  color:white;
 }
 
 .success {
-  background: var(--success);
-  color: white;
+  background:var(--success);
+  color:white;
 }
 
 nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 20px 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin:20px 0;
 }
 
 nav button {
-  background: #2876aa;
-  color: white;
-  flex: 1 1 auto;
+  background:var(--secondary);
+  color:white;
+  min-height:48px;
 }
 
 nav button.active {
-  background: var(--primary);
+  background:var(--primary);
 }
 
 .cards {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 20px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
 }
 
-.card, .panel {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.04);
-  margin-bottom: 16px;
+.card,.panel {
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 3px 12px rgba(0,0,0,.04);
+  margin-bottom:16px;
 }
 
 .card small {
-  color: var(--muted);
-  font-weight: bold;
+  color:var(--muted);
+  font-weight:bold;
 }
 
 .card h2 {
-  font-size: 23px;
-  margin-bottom: 0;
-  overflow-wrap: anywhere;
+  font-size:23px;
+  overflow-wrap:anywhere;
 }
 
 .panel h2 {
-  margin-top: 0;
+  margin-top:0;
 }
 
 .form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 14px;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0 14px;
 }
 
 .full {
-  grid-column: 1 / -1;
+  grid-column:1/-1;
 }
 
 .table-wrap {
-  overflow-x: auto;
+  overflow-x:auto;
 }
 
 table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 650px;
+  border-collapse:collapse;
+  width:100%;
+  min-width:650px;
 }
 
-th, td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #e7eaf0;
+th,td {
+  padding:12px;
+  text-align:left;
+  border-bottom:1px solid #e7eaf0;
 }
 
 th {
-  background: #f5f7fa;
+  background:#f5f7fa;
 }
 
 .actions {
-  display: flex;
-  gap: 6px;
+  display:flex;
+  gap:6px;
 }
 
 .actions button {
-  padding: 8px 10px;
-  font-size: 12px;
+  padding:8px;
+  font-size:12px;
 }
 
 .hidden {
-  display: none !important;
+  display:none !important;
 }
 
 .muted {
-  color: var(--muted);
+  color:var(--muted);
 }
 
 .notice {
-  background: #eaf3fc;
-  border-left: 4px solid var(--secondary);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 15px;
+  background:#eaf3fc;
+  border-left:4px solid var(--secondary);
+  padding:12px;
+  margin-bottom:15px;
+  border-radius:6px;
 }
 
 footer {
-  text-align: center;
-  color: var(--muted);
-  padding: 25px;
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
 }
 
-@media(max-width: 800px) {
+@media(max-width:800px) {
   .cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 }
 
-@media(max-width: 520px) {
-  header h1 {
-    font-size: 24px;
-  }
-
+@media(max-width:520px) {
   .container {
-    padding: 12px;
+    padding:12px;
   }
 
-  .cards {
-    gap: 9px;
+  header h1 {
+    font-size:24px;
   }
 
-  .card {
-    padding: 14px;
-  }
-
-  .card h2 {
-    font-size: 19px;
-  }
-
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .full {
-    grid-column: auto;
+  nav {
+    grid-template-columns:repeat(3,1fr);
   }
 
   nav button {
-    flex: 1 1 30%;
-    font-size: 13px;
-    padding: 11px 7px;
+    padding:11px 5px;
+    font-size:13px;
+  }
+
+  .form-grid {
+    grid-template-columns:1fr;
+  }
+
+  .full {
+    grid-column:auto;
+  }
+
+  .card {
+    padding:14px;
+  }
+
+  .card h2 {
+    font-size:19px;
   }
 }
 
 @media print {
-  header, nav, .no-print, footer {
-    display: none !important;
+  header,nav,.no-print,footer {
+    display:none !important;
   }
 
   body {
-    background: white;
+    background:white;
   }
 
   .panel {
-    box-shadow: none;
+    box-shadow:none;
   }
 }
 </style>
@@ -281,7 +273,8 @@ footer {
   <p>Global Business Management Platform · Version 1.3</p>
 
   <label for="currency">Business Currency</label>
-  <select id="currency" onchange="changeCurrency()">
+
+  <select id="currency">
     <option value="NGN">NGN - Nigerian Naira</option>
     <option value="USD">USD - US Dollar</option>
     <option value="GBP">GBP - British Pound</option>
@@ -302,16 +295,18 @@ footer {
 
 <div class="container">
 
-<nav class="no-print">
-  <button class="active" onclick="showPage('dashboard',this)">Dashboard</button>
-  <button onclick="showPage('sales',this)">Sales</button>
-  <button onclick="showPage('expenses',this)">Expenses</button>
-  <button onclick="showPage('inventory',this)">Inventory</button>
-  <button onclick="showPage('customers',this)">Customers</button>
-  <button onclick="showPage('invoices',this)">Invoices</button>
-  <button onclick="showPage('reports',this)">Reports</button>
-  <button onclick="showPage('settings',this)">Settings</button>
+<nav class="no-print" id="navigation">
+  <button type="button" data-page="dashboard" class="active">Dashboard</button>
+  <button type="button" data-page="sales">Sales</button>
+  <button type="button" data-page="expenses">Expenses</button>
+  <button type="button" data-page="inventory">Inventory</button>
+  <button type="button" data-page="customers">Customers</button>
+  <button type="button" data-page="invoices">Invoices</button>
+  <button type="button" data-page="reports">Reports</button>
+  <button type="button" data-page="settings">Settings</button>
 </nav>
+
+<div id="appMessage" class="notice hidden"></div>
 
 <!-- DASHBOARD -->
 
@@ -341,10 +336,7 @@ footer {
 
   <div class="panel">
     <h2 id="welcome">Welcome to SmartBiz</h2>
-    <p class="muted">
-      Manage your sales, expenses, inventory, customers and invoices in one place.
-    </p>
-
+    <p class="muted">Manage your business in one place.</p>
     <h3>Recent Transactions</h3>
     <div id="recentTransactions"></div>
   </div>
@@ -397,7 +389,7 @@ footer {
 
       <div class="full">
         <button class="primary" type="submit">Save Sale</button>
-        <button class="secondary hidden" type="button" id="cancelSaleEdit" onclick="cancelEdit('sale')">Cancel Edit</button>
+        <button class="secondary hidden" id="cancelSaleEdit" type="button">Cancel Edit</button>
       </div>
 
     </form>
@@ -405,7 +397,7 @@ footer {
 
   <div class="panel">
     <h2>Sales History</h2>
-    <input type="search" id="salesSearch" placeholder="Search sales..." oninput="renderSales()">
+    <input type="search" id="salesSearch" placeholder="Search sales...">
     <div id="salesTable"></div>
   </div>
 
@@ -453,7 +445,7 @@ footer {
 
       <div class="full">
         <button class="primary" type="submit">Save Expense</button>
-        <button class="secondary hidden" type="button" id="cancelExpenseEdit" onclick="cancelEdit('expense')">Cancel Edit</button>
+        <button class="secondary hidden" id="cancelExpenseEdit" type="button">Cancel Edit</button>
       </div>
 
     </form>
@@ -461,7 +453,7 @@ footer {
 
   <div class="panel">
     <h2>Expense History</h2>
-    <input type="search" id="expenseSearch" placeholder="Search expenses..." oninput="renderExpenses()">
+    <input type="search" id="expenseSearch" placeholder="Search expenses...">
     <div id="expensesTable"></div>
   </div>
 
@@ -505,7 +497,7 @@ footer {
 
       <div class="full">
         <button class="primary" type="submit">Save Product</button>
-        <button class="secondary hidden" type="button" id="cancelProductEdit" onclick="cancelEdit('product')">Cancel Edit</button>
+        <button class="secondary hidden" id="cancelProductEdit" type="button">Cancel Edit</button>
       </div>
 
     </form>
@@ -513,7 +505,7 @@ footer {
 
   <div class="panel">
     <h2>Inventory List</h2>
-    <input type="search" id="productSearch" placeholder="Search products..." oninput="renderInventory()">
+    <input type="search" id="productSearch" placeholder="Search products...">
     <div id="inventoryTable"></div>
   </div>
 
@@ -552,7 +544,7 @@ footer {
 
       <div class="full">
         <button class="primary" type="submit">Save Customer</button>
-        <button class="secondary hidden" type="button" id="cancelCustomerEdit" onclick="cancelEdit('customer')">Cancel Edit</button>
+        <button class="secondary hidden" id="cancelCustomerEdit" type="button">Cancel Edit</button>
       </div>
 
     </form>
@@ -560,7 +552,7 @@ footer {
 
   <div class="panel">
     <h2>Customer Records</h2>
-    <input type="search" id="customerSearch" placeholder="Search customers..." oninput="renderCustomers()">
+    <input type="search" id="customerSearch" placeholder="Search customers...">
     <div id="customersTable"></div>
   </div>
 
@@ -620,12 +612,8 @@ footer {
 
   <div class="panel">
     <h2>Financial Reports</h2>
-
-    <p>These reports use the selected business currency.</p>
-
     <div id="reportContent"></div>
-
-    <button class="primary no-print" onclick="window.print()">Print Report</button>
+    <button class="primary no-print" id="printReport">Print Report</button>
   </div>
 
 </section>
@@ -659,213 +647,284 @@ footer {
   <div class="panel">
     <h2>Data Management</h2>
 
-    <p>Download a backup of your business records.</p>
-
-    <button class="success" onclick="backupData()">Download Backup</button>
+    <button class="success" id="backupButton">Download Backup</button>
 
     <hr>
 
     <label>Restore Backup</label>
     <input type="file" id="restoreFile" accept=".json">
 
-    <button class="primary" onclick="restoreData()">Restore Data</button>
+    <button class="primary" id="restoreButton">Restore Data</button>
 
-    <p class="muted">
-      Restoring a backup replaces the current records. Download a backup first.
-    </p>
+    <p class="muted">Restoring replaces the current records. Download a backup first.</p>
   </div>
 
 </section>
 
 </div>
 
-<footer>
-  SmartBiz Manager V1.3 · Your business, organised.
-</footer>
+<footer>SmartBiz Manager V1.3</footer>
 
 <script>
+"use strict";
+
+/* STORAGE */
+
 const STORAGE_KEY = "smartbiz_manager_v13";
 
 const defaultData = {
-  currency: "NGN",
-  business: {
-    name: "SmartBiz",
-    phone: "",
-    email: "",
-    address: ""
+  currency:"NGN",
+  business:{
+    name:"SmartBiz",
+    phone:"",
+    email:"",
+    address:""
   },
-  sales: [],
-  expenses: [],
-  products: [],
-  customers: [],
-  invoices: []
+  sales:[],
+  expenses:[],
+  products:[],
+  customers:[],
+  invoices:[]
 };
 
-let data = loadData();
+/* SAFE JSON CLONE - MOBILE COMPATIBILITY */
+
+function safeClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 function loadData() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
 
-    if (!saved) return structuredClone(defaultData);
+    if (!saved) return safeClone(defaultData);
 
     const parsed = JSON.parse(saved);
 
     return {
-      ...structuredClone(defaultData),
+      ...safeClone(defaultData),
       ...parsed,
-      business: {
+      business:{
         ...defaultData.business,
         ...(parsed.business || {})
       },
-      sales: Array.isArray(parsed.sales) ? parsed.sales : [],
-      expenses: Array.isArray(parsed.expenses) ? parsed.expenses : [],
-      products: Array.isArray(parsed.products) ? parsed.products : [],
-      customers: Array.isArray(parsed.customers) ? parsed.customers : [],
-      invoices: Array.isArray(parsed.invoices) ? parsed.invoices : []
+      sales:Array.isArray(parsed.sales) ? parsed.sales : [],
+      expenses:Array.isArray(parsed.expenses) ? parsed.expenses : [],
+      products:Array.isArray(parsed.products) ? parsed.products : [],
+      customers:Array.isArray(parsed.customers) ? parsed.customers : [],
+      invoices:Array.isArray(parsed.invoices) ? parsed.invoices : []
     };
 
-  } catch (error) {
-    alert("Saved data could not be read. Your previous data has not been overwritten.");
-    return structuredClone(defaultData);
+  } catch(error) {
+    console.error("Data loading error:",error);
+    return safeClone(defaultData);
   }
 }
 
+let data = loadData();
+
 function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  renderAll();
+  try {
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+    renderAll();
+  } catch(error) {
+    console.error(error);
+    alert("Unable to save data. Check your browser storage.");
+  }
 }
 
-function id() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+/* UTILITIES */
+
+function makeId() {
+  return Date.now().toString(36) +
+    Math.random().toString(36).substring(2,8);
 }
 
 function today() {
   const d = new Date();
-  return [
-    d.getFullYear(),
-    String(d.getMonth() + 1).padStart(2, "0"),
-    String(d.getDate()).padStart(2, "0")
-  ].join("-");
+
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
 }
 
 function money(value) {
-  return new Intl.NumberFormat(undefined, {
-    style: "currency",
-    currency: data.currency || "NGN",
-    maximumFractionDigits: 2
-  }).format(Number(value) || 0);
+  try {
+    return new Intl.NumberFormat(undefined,{
+      style:"currency",
+      currency:data.currency || "NGN",
+      maximumFractionDigits:2
+    }).format(Number(value)||0);
+  } catch(error) {
+    return (data.currency || "NGN") + " " + (Number(value)||0);
+  }
 }
 
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[char]);
+  return String(value ?? "").replace(/[&<>"']/g,function(char) {
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[char];
+  });
 }
 
-function showPage(page, button) {
-  document.querySelectorAll("section").forEach(section => {
+function message(text) {
+  const box = document.getElementById("appMessage");
+
+  box.textContent = text;
+  box.classList.remove("hidden");
+
+  setTimeout(function() {
+    box.classList.add("hidden");
+  },3500);
+}
+
+/* NAVIGATION */
+
+function showPage(page) {
+  const target = document.getElementById(page);
+
+  if (!target) return;
+
+  document.querySelectorAll("section").forEach(function(section) {
     section.classList.add("hidden");
   });
 
-  document.getElementById(page).classList.remove("hidden");
+  target.classList.remove("hidden");
 
-  document.querySelectorAll("nav button").forEach(btn => {
-    btn.classList.remove("active");
+  document.querySelectorAll("#navigation button").forEach(function(button) {
+    button.classList.toggle("active",button.dataset.page === page);
   });
 
-  button.classList.add("active");
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo(0,0);
   renderAll();
 }
 
-function changeCurrency() {
-  data.currency = document.getElementById("currency").value;
-  saveData();
-}
+document.getElementById("navigation").addEventListener("click",function(event) {
+  const button = event.target.closest("button[data-page]");
 
-function setDefaultDates() {
-  document.getElementById("saleDate").value = today();
-  document.getElementById("expenseDate").value = today();
-  document.getElementById("invoiceDueDate").value = today();
-}
+  if (!button) return;
+
+  showPage(button.dataset.page);
+});
+
+document.getElementById("currency").addEventListener("change",function() {
+  data.currency = this.value;
+  saveData();
+});
+
+/* DASHBOARD */
 
 function renderDashboard() {
-  const sales = data.sales.reduce((sum, item) => sum + Number(item.total), 0);
-  const expenses = data.expenses.reduce((sum, item) => sum + Number(item.amount), 0);
+  const totalSales = data.sales.reduce(function(sum,item) {
+    return sum + Number(item.total || 0);
+  },0);
 
-  document.getElementById("totalSales").textContent = money(sales);
-  document.getElementById("totalExpenses").textContent = money(expenses);
-  document.getElementById("netProfit").textContent = money(sales - expenses);
-  document.getElementById("productCount").textContent = data.products.length;
+  const totalExpenses = data.expenses.reduce(function(sum,item) {
+    return sum + Number(item.amount || 0);
+  },0);
+
+  document.getElementById("totalSales").textContent = money(totalSales);
+  document.getElementById("totalExpenses").textContent = money(totalExpenses);
+  document.getElementById("netProfit").textContent =
+    money(totalSales-totalExpenses);
+
+  document.getElementById("productCount").textContent =
+    data.products.length;
 
   document.getElementById("welcome").textContent =
     "Welcome to " + (data.business.name || "SmartBiz");
 
   document.getElementById("stockSummary").textContent =
-    "Total inventory items: " + data.products.length;
+    "Total inventory products: " + data.products.length;
 
   document.getElementById("customerSummary").textContent =
     "Registered customers: " + data.customers.length;
 
-  const recent = [...data.sales.map(x => ({
-    type: "Sale",
-    name: x.productName,
-    amount: x.total,
-    date: x.date
-  })), ...data.expenses.map(x => ({
-    type: "Expense",
-    name: x.name,
-    amount: x.amount,
-    date: x.date
-  }))].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 8);
+  const recent = [];
+
+  data.sales.forEach(function(s) {
+    recent.push({
+      type:"Sale",
+      name:s.productName,
+      date:s.date,
+      amount:s.total
+    });
+  });
+
+  data.expenses.forEach(function(e) {
+    recent.push({
+      type:"Expense",
+      name:e.name,
+      date:e.date,
+      amount:e.amount
+    });
+  });
+
+  recent.sort(function(a,b) {
+    return String(b.date).localeCompare(String(a.date));
+  });
+
+  const items = recent.slice(0,8);
 
   document.getElementById("recentTransactions").innerHTML =
-    recent.length ? `
-    <div class="table-wrap">
-    <table>
-      <tr><th>Type</th><th>Description</th><th>Date</th><th>Amount</th></tr>
-      ${recent.map(item => `
-        <tr>
-          <td>${escapeHTML(item.type)}</td>
-          <td>${escapeHTML(item.name)}</td>
-          <td>${escapeHTML(item.date)}</td>
-          <td>${money(item.amount)}</td>
-        </tr>
-      `).join("")}
-    </table>
-    </div>` : "<p class='muted'>No transactions recorded yet.</p>";
+    items.length ? `
+      <div class="table-wrap">
+      <table>
+        <tr><th>Type</th><th>Description</th><th>Date</th><th>Amount</th></tr>
+        ${items.map(function(item) {
+          return `<tr>
+            <td>${escapeHTML(item.type)}</td>
+            <td>${escapeHTML(item.name)}</td>
+            <td>${escapeHTML(item.date)}</td>
+            <td>${money(item.amount)}</td>
+          </tr>`;
+        }).join("")}
+      </table>
+      </div>
+    ` : "<p class='muted'>No transactions recorded yet.</p>";
 }
+
+/* DROPDOWNS */
 
 function updateSelects() {
   document.getElementById("saleProduct").innerHTML =
     '<option value="">Select product</option>' +
-    data.products.map(p =>
-      `<option value="${p.id}">${escapeHTML(p.name)} (Stock: ${p.stock})</option>`
-    ).join("");
+    data.products.map(function(p) {
+      return `<option value="${escapeHTML(p.id)}">
+        ${escapeHTML(p.name)} (Stock: ${p.stock})
+      </option>`;
+    }).join("");
 
-  const customerOptions = data.customers.map(c =>
-    `<option value="${c.id}">${escapeHTML(c.name)}</option>`
-  ).join("");
+  const customers = data.customers.map(function(c) {
+    return `<option value="${escapeHTML(c.id)}">
+      ${escapeHTML(c.name)}
+    </option>`;
+  }).join("");
 
   document.getElementById("saleCustomer").innerHTML =
-    '<option value="">Walk-in customer</option>' + customerOptions;
+    '<option value="">Walk-in customer</option>' + customers;
 
   document.getElementById("invoiceCustomer").innerHTML =
-    '<option value="">Select customer</option>' + customerOptions;
+    '<option value="">Select customer</option>' + customers;
 }
 
-function renderSales() {
-  const search = (document.getElementById("salesSearch").value || "").toLowerCase();
+/* SALES */
 
-  const rows = data.sales.filter(s =>
-    `${s.productName} ${s.date} ${s.customerName}`.toLowerCase().includes(search)
-  );
+function renderSales() {
+  const search = document.getElementById("salesSearch").value.toLowerCase();
+
+  const rows = data.sales.filter(function(s) {
+    return (
+      String(s.productName).toLowerCase().includes(search) ||
+      String(s.customerName).toLowerCase().includes(search) ||
+      String(s.date).includes(search)
+    );
+  });
 
   document.getElementById("salesTable").innerHTML =
     rows.length ? `
@@ -875,30 +934,12 @@ function renderSales() {
         <th>Date</th><th>Product</th><th>Customer</th>
         <th>Qty</th><th>Total</th><th>Actions</th>
       </tr>
-      ${rows.map(s => `
-        <tr>
+      ${rows.map(function(s) {
+        return `<tr>
           <td>${escapeHTML(s.date)}</td>
           <td>${escapeHTML(s.productName)}</td>
           <td>${escapeHTML(s.customerName || "Walk-in")}</td>
           <td>${s.qty}</td>
           <td>${money(s.total)}</td>
           <td class="actions">
-            <button class="secondary" onclick="editRecord('sale','${s.id}')">Edit</button>
-            <button class="danger" onclick="deleteRecord('sale','${s.id}')">Delete</button>
-          </td>
-        </tr>
-      `).join("")}
-    </table>
-    </div>` : "<p>No sales found.</p>";
-}
-
-function renderExpenses() {
-  const search = (document.getElementById("expenseSearch").value || "").toLowerCase();
-
-  const rows = data.expenses.filter(e =>
-    `${e.name} ${e.category} ${e.date}`.toLowerCase().includes(search)
-  );
-
-  document.getElementById("expensesTable").innerHTML =
-    rows.length ? `
-    <
+            <button class="secondary" data-action="edit-sale" data-id="${escapeHTML(s.id
