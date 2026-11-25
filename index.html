@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SmartBiz Manager V1.3</title>
+<title>SmartBiz Manager V1.4</title>
 
 <style>
 :root {
@@ -31,23 +31,21 @@ body {
 header {
   background:var(--primary);
   color:white;
-  padding:25px 18px;
+  padding:24px 18px;
 }
 
 header h1 {
   margin:0 0 8px;
-  font-size:28px;
+  font-size:27px;
 }
 
 header p {
   color:#dce6f1;
-  margin:0 0 20px;
 }
 
 header label {
   display:block;
   font-weight:bold;
-  margin-bottom:8px;
 }
 
 .container {
@@ -81,6 +79,11 @@ button {
   font-weight:bold;
 }
 
+button:disabled {
+  opacity:.5;
+  cursor:not-allowed;
+}
+
 .primary {
   background:var(--secondary);
   color:white;
@@ -91,13 +94,13 @@ button {
   color:var(--primary);
 }
 
-.danger {
-  background:var(--danger);
+.success {
+  background:var(--success);
   color:white;
 }
 
-.success {
-  background:var(--success);
+.danger {
+  background:var(--danger);
   color:white;
 }
 
@@ -139,12 +142,8 @@ nav button.active {
 }
 
 .card h2 {
-  font-size:23px;
+  font-size:22px;
   overflow-wrap:anywhere;
-}
-
-.panel h2 {
-  margin-top:0;
 }
 
 .form-grid {
@@ -221,11 +220,11 @@ footer {
   }
 
   header h1 {
-    font-size:24px;
+    font-size:23px;
   }
 
   nav {
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   nav button {
@@ -243,10 +242,6 @@ footer {
 
   .card {
     padding:14px;
-  }
-
-  .card h2 {
-    font-size:19px;
   }
 }
 
@@ -270,10 +265,9 @@ footer {
 
 <header>
   <h1 id="appTitle">SmartBiz Manager</h1>
-  <p>Global Business Management Platform · Version 1.3</p>
+  <p>Global Business Management Platform · Version 1.4</p>
 
   <label for="currency">Business Currency</label>
-
   <select id="currency">
     <option value="NGN">NGN - Nigerian Naira</option>
     <option value="USD">USD - US Dollar</option>
@@ -295,7 +289,7 @@ footer {
 
 <div class="container">
 
-<nav class="no-print" id="navigation">
+<nav id="navigation" class="no-print">
   <button type="button" data-page="dashboard" class="active">Dashboard</button>
   <button type="button" data-page="sales">Sales</button>
   <button type="button" data-page="expenses">Expenses</button>
@@ -303,6 +297,7 @@ footer {
   <button type="button" data-page="customers">Customers</button>
   <button type="button" data-page="invoices">Invoices</button>
   <button type="button" data-page="reports">Reports</button>
+  <button type="button" data-page="history">History</button>
   <button type="button" data-page="settings">Settings</button>
 </nav>
 
@@ -313,6 +308,7 @@ footer {
 <section id="dashboard">
 
   <div class="cards">
+
     <div class="card">
       <small>TOTAL SALES</small>
       <h2 id="totalSales">0</h2>
@@ -332,6 +328,7 @@ footer {
       <small>PRODUCTS</small>
       <h2 id="productCount">0</h2>
     </div>
+
   </div>
 
   <div class="panel">
@@ -372,7 +369,7 @@ footer {
 
       <div>
         <label>Unit Selling Price</label>
-        <input type="number" id="salePrice" min="0" step="0.01" required>
+        <input type="number" id="salePrice" min="0.01" step="0.01" required>
       </div>
 
       <div>
@@ -415,7 +412,7 @@ footer {
       <input type="hidden" id="expenseEditId">
 
       <div>
-        <label>Expense Description</label>
+        <label>Description</label>
         <input type="text" id="expenseName" required>
       </div>
 
@@ -487,7 +484,7 @@ footer {
 
       <div>
         <label>Selling Price</label>
-        <input type="number" id="productSelling" min="0" step="0.01" required>
+        <input type="number" id="productSelling" min="0.01" step="0.01" required>
       </div>
 
       <div>
@@ -613,7 +610,19 @@ footer {
   <div class="panel">
     <h2>Financial Reports</h2>
     <div id="reportContent"></div>
-    <button class="primary no-print" id="printReport">Print Report</button>
+    <button class="primary no-print" id="printReport" type="button">Print Report</button>
+  </div>
+
+</section>
+
+<!-- HISTORY -->
+
+<section id="history" class="hidden">
+
+  <div class="panel">
+    <h2>Transaction History</h2>
+    <p class="muted">Your recorded sales and expenses.</p>
+    <div id="historyTable"></div>
   </div>
 
 </section>
@@ -647,30 +656,30 @@ footer {
   <div class="panel">
     <h2>Data Management</h2>
 
-    <button class="success" id="backupButton">Download Backup</button>
+    <button class="success" id="backupButton" type="button">Download Backup</button>
 
     <hr>
 
     <label>Restore Backup</label>
     <input type="file" id="restoreFile" accept=".json">
 
-    <button class="primary" id="restoreButton">Restore Data</button>
+    <button class="primary" id="restoreButton" type="button">Restore Data</button>
 
-    <p class="muted">Restoring replaces the current records. Download a backup first.</p>
+    <p class="muted">Restoring replaces current records. Download a backup first.</p>
   </div>
 
 </section>
 
 </div>
 
-<footer>SmartBiz Manager V1.3</footer>
+<footer>SmartBiz Manager V1.4</footer>
 
 <script>
 "use strict";
 
 /* STORAGE */
 
-const STORAGE_KEY = "smartbiz_manager_v13";
+const STORAGE_KEY = "smartbiz_manager_v14";
 
 const defaultData = {
   currency:"NGN",
@@ -687,9 +696,7 @@ const defaultData = {
   invoices:[]
 };
 
-/* SAFE JSON CLONE - MOBILE COMPATIBILITY */
-
-function safeClone(obj) {
+function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
 
@@ -697,12 +704,12 @@ function loadData() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
 
-    if (!saved) return safeClone(defaultData);
+    if (!saved) return clone(defaultData);
 
     const parsed = JSON.parse(saved);
 
     return {
-      ...safeClone(defaultData),
+      ...clone(defaultData),
       ...parsed,
       business:{
         ...defaultData.business,
@@ -716,28 +723,18 @@ function loadData() {
     };
 
   } catch(error) {
-    console.error("Data loading error:",error);
-    return safeClone(defaultData);
+    console.error(error);
+    return clone(defaultData);
   }
 }
 
 let data = loadData();
 
-function saveData() {
-  try {
-    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
-    renderAll();
-  } catch(error) {
-    console.error(error);
-    alert("Unable to save data. Check your browser storage.");
-  }
-}
-
 /* UTILITIES */
 
-function makeId() {
+function id() {
   return Date.now().toString(36) +
-    Math.random().toString(36).substring(2,8);
+    Math.random().toString(36).slice(2,8);
 }
 
 function today() {
@@ -754,21 +751,22 @@ function money(value) {
       style:"currency",
       currency:data.currency || "NGN",
       maximumFractionDigits:2
-    }).format(Number(value)||0);
+    }).format(Number(value) || 0);
   } catch(error) {
-    return (data.currency || "NGN") + " " + (Number(value)||0);
+    return (data.currency || "NGN") + " " +
+      (Number(value) || 0);
   }
 }
 
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g,function(char) {
+function safe(value) {
+  return String(value ?? "").replace(/[&<>"']/g,function(c) {
     return {
       "&":"&amp;",
       "<":"&lt;",
       ">":"&gt;",
       '"':"&quot;",
       "'":"&#039;"
-    }[char];
+    }[c];
   });
 }
 
@@ -783,10 +781,43 @@ function message(text) {
   },3500);
 }
 
+function saveData() {
+  try {
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+    renderAll();
+  } catch(error) {
+    console.error(error);
+    alert("Unable to save. Check browser storage.");
+  }
+}
+
+function el(id) {
+  return document.getElementById(id);
+}
+
+function value(id) {
+  return el(id).value.trim();
+}
+
+function table(headers,rows) {
+  if (!rows.length) {
+    return '<p class="muted">No records found.</p>';
+  }
+
+  return `
+    <div class="table-wrap">
+      <table>
+        <thead><tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr></thead>
+        <tbody>${rows.join("")}</tbody>
+      </table>
+    </div>
+  `;
+}
+
 /* NAVIGATION */
 
 function showPage(page) {
-  const target = document.getElementById(page);
+  const target = el(page);
 
   if (!target) return;
 
@@ -804,7 +835,7 @@ function showPage(page) {
   renderAll();
 }
 
-document.getElementById("navigation").addEventListener("click",function(event) {
+el("navigation").addEventListener("click",function(event) {
   const button = event.target.closest("button[data-page]");
 
   if (!button) return;
@@ -812,7 +843,7 @@ document.getElementById("navigation").addEventListener("click",function(event) {
   showPage(button.dataset.page);
 });
 
-document.getElementById("currency").addEventListener("change",function() {
+el("currency").addEventListener("change",function() {
   data.currency = this.value;
   saveData();
 });
@@ -820,126 +851,762 @@ document.getElementById("currency").addEventListener("change",function() {
 /* DASHBOARD */
 
 function renderDashboard() {
-  const totalSales = data.sales.reduce(function(sum,item) {
-    return sum + Number(item.total || 0);
-  },0);
+  const sales = data.sales.reduce((sum,s) => sum + Number(s.total || 0),0);
 
-  const totalExpenses = data.expenses.reduce(function(sum,item) {
-    return sum + Number(item.amount || 0);
-  },0);
+  const expenses = data.expenses.reduce((sum,e) => sum + Number(e.amount || 0),0);
 
-  document.getElementById("totalSales").textContent = money(totalSales);
-  document.getElementById("totalExpenses").textContent = money(totalExpenses);
-  document.getElementById("netProfit").textContent =
-    money(totalSales-totalExpenses);
+  el("totalSales").textContent = money(sales);
+  el("totalExpenses").textContent = money(expenses);
+  el("netProfit").textContent = money(sales-expenses);
 
-  document.getElementById("productCount").textContent =
-    data.products.length;
+  el("productCount").textContent = data.products.length;
 
-  document.getElementById("welcome").textContent =
+  el("welcome").textContent =
     "Welcome to " + (data.business.name || "SmartBiz");
 
-  document.getElementById("stockSummary").textContent =
+  el("stockSummary").textContent =
     "Total inventory products: " + data.products.length;
 
-  document.getElementById("customerSummary").textContent =
+  el("customerSummary").textContent =
     "Registered customers: " + data.customers.length;
 
   const recent = [];
 
-  data.sales.forEach(function(s) {
-    recent.push({
-      type:"Sale",
-      name:s.productName,
-      date:s.date,
-      amount:s.total
-    });
-  });
+  data.sales.forEach(s => recent.push({
+    type:"Sale",
+    name:s.productName,
+    date:s.date,
+    amount:s.total
+  }));
 
-  data.expenses.forEach(function(e) {
-    recent.push({
-      type:"Expense",
-      name:e.name,
-      date:e.date,
-      amount:e.amount
-    });
-  });
+  data.expenses.forEach(e => recent.push({
+    type:"Expense",
+    name:e.name,
+    date:e.date,
+    amount:e.amount
+  }));
 
-  recent.sort(function(a,b) {
-    return String(b.date).localeCompare(String(a.date));
-  });
+  recent.sort((a,b) => String(b.date).localeCompare(String(a.date)));
 
-  const items = recent.slice(0,8);
-
-  document.getElementById("recentTransactions").innerHTML =
-    items.length ? `
-      <div class="table-wrap">
-      <table>
-        <tr><th>Type</th><th>Description</th><th>Date</th><th>Amount</th></tr>
-        ${items.map(function(item) {
-          return `<tr>
-            <td>${escapeHTML(item.type)}</td>
-            <td>${escapeHTML(item.name)}</td>
-            <td>${escapeHTML(item.date)}</td>
-            <td>${money(item.amount)}</td>
-          </tr>`;
-        }).join("")}
-      </table>
-      </div>
-    ` : "<p class='muted'>No transactions recorded yet.</p>";
+  el("recentTransactions").innerHTML = table(
+    ["Type","Description","Date","Amount"],
+    recent.slice(0,8).map(item => `
+      <tr>
+        <td>${safe(item.type)}</td>
+        <td>${safe(item.name)}</td>
+        <td>${safe(item.date)}</td>
+        <td>${money(item.amount)}</td>
+      </tr>
+    `)
+  );
 }
 
 /* DROPDOWNS */
 
 function updateSelects() {
-  document.getElementById("saleProduct").innerHTML =
+  el("saleProduct").innerHTML =
     '<option value="">Select product</option>' +
-    data.products.map(function(p) {
-      return `<option value="${escapeHTML(p.id)}">
-        ${escapeHTML(p.name)} (Stock: ${p.stock})
-      </option>`;
-    }).join("");
+    data.products.map(p => `
+      <option value="${safe(p.id)}">
+        ${safe(p.name)} (Stock: ${p.stock})
+      </option>
+    `).join("");
 
-  const customers = data.customers.map(function(c) {
-    return `<option value="${escapeHTML(c.id)}">
-      ${escapeHTML(c.name)}
-    </option>`;
-  }).join("");
+  const customers = data.customers.map(c => `
+    <option value="${safe(c.id)}">${safe(c.name)}</option>
+  `).join("");
 
-  document.getElementById("saleCustomer").innerHTML =
+  el("saleCustomer").innerHTML =
     '<option value="">Walk-in customer</option>' + customers;
 
-  document.getElementById("invoiceCustomer").innerHTML =
+  el("invoiceCustomer").innerHTML =
     '<option value="">Select customer</option>' + customers;
 }
 
 /* SALES */
 
 function renderSales() {
-  const search = document.getElementById("salesSearch").value.toLowerCase();
+  const search = value("salesSearch").toLowerCase();
 
-  const rows = data.sales.filter(function(s) {
-    return (
-      String(s.productName).toLowerCase().includes(search) ||
-      String(s.customerName).toLowerCase().includes(search) ||
-      String(s.date).includes(search)
-    );
-  });
+  const rows = data.sales.filter(s =>
+    String(s.productName).toLowerCase().includes(search) ||
+    String(s.customerName).toLowerCase().includes(search) ||
+    String(s.date).includes(search)
+  );
 
-  document.getElementById("salesTable").innerHTML =
-    rows.length ? `
-    <div class="table-wrap">
-    <table>
+  el("salesTable").innerHTML = table(
+    ["Date","Product","Customer","Qty","Total","Actions"],
+    rows.map(s => `
       <tr>
-        <th>Date</th><th>Product</th><th>Customer</th>
-        <th>Qty</th><th>Total</th><th>Actions</th>
+        <td>${safe(s.date)}</td>
+        <td>${safe(s.productName)}</td>
+        <td>${safe(s.customerName || "Walk-in")}</td>
+        <td>${s.qty}</td>
+        <td>${money(s.total)}</td>
+        <td>
+          <div class="actions">
+            <button class="secondary" data-action="edit-sale" data-id="${safe(s.id)}">Edit</button>
+            <button class="danger" data-action="delete-sale" data-id="${safe(s.id)}">Delete</button>
+          </div>
+        </td>
       </tr>
-      ${rows.map(function(s) {
-        return `<tr>
-          <td>${escapeHTML(s.date)}</td>
-          <td>${escapeHTML(s.productName)}</td>
-          <td>${escapeHTML(s.customerName || "Walk-in")}</td>
-          <td>${s.qty}</td>
-          <td>${money(s.total)}</td>
-          <td class="actions">
-            <button class="secondary" data-action="edit-sale" data-id="${escapeHTML(s.id
+    `)
+  );
+}
+
+el("salesSearch").addEventListener("input",renderSales);
+
+el("saleForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  const product = data.products.find(p => p.id === value("saleProduct"));
+
+  if (!product) {
+    alert("Please add or select a product first.");
+    return;
+  }
+
+  const qty = Number(value("saleQty"));
+  const price = Number(value("salePrice"));
+  const editId = value("saleEditId");
+
+  if (qty <= 0 || price <= 0) {
+    alert("Enter a valid quantity and price.");
+    return;
+  }
+
+  const old = data.sales.find(s => s.id === editId);
+
+  const available = Number(product.stock) +
+    (old && old.productId === product.id ? Number(old.qty) : 0);
+
+  if (qty > available) {
+    alert("Not enough stock available.");
+    return;
+  }
+
+  if (old && old.productId !== product.id) {
+    const oldProduct = data.products.find(p => p.id === old.productId);
+
+    if (oldProduct) {
+      oldProduct.stock += Number(old.qty);
+    }
+  }
+
+  product.stock = available - qty;
+
+  const customer = data.customers.find(c => c.id === value("saleCustomer"));
+
+  const sale = {
+    id:editId || id(),
+    productId:product.id,
+    productName:product.name,
+    customerName:customer ? customer.name : "Walk-in",
+    qty:qty,
+    price:price,
+    total:qty*price,
+    date:value("saleDate")
+  };
+
+  if (old) {
+    Object.assign(old,sale);
+  } else {
+    data.sales.push(sale);
+  }
+
+  this.reset();
+  el("saleDate").value = today();
+  el("saleEditId").value = "";
+  el("cancelSaleEdit").classList.add("hidden");
+
+  saveData();
+  message("Sale saved successfully.");
+});
+
+el("salesTable").addEventListener("click",function(event) {
+  const button = event.target.closest("button[data-action]");
+
+  if (!button) return;
+
+  const sale = data.sales.find(s => s.id === button.dataset.id);
+
+  if (!sale) return;
+
+  if (button.dataset.action === "delete-sale") {
+    if (!confirm("Delete this sale?")) return;
+
+    const product = data.products.find(p => p.id === sale.productId);
+
+    if (product) product.stock += Number(sale.qty);
+
+    data.sales = data.sales.filter(s => s.id !== sale.id);
+    saveData();
+    message("Sale deleted.");
+  }
+
+  if (button.dataset.action === "edit-sale") {
+    el("saleEditId").value = sale.id;
+    el("saleProduct").value = sale.productId;
+    el("saleQty").value = sale.qty;
+    el("salePrice").value = sale.price;
+    el("saleDate").value = sale.date;
+
+    const customer = data.customers.find(c => c.name === sale.customerName);
+
+    el("saleCustomer").value = customer ? customer.id : "";
+
+    el("cancelSaleEdit").classList.remove("hidden");
+    showPage("sales");
+  }
+});
+
+el("cancelSaleEdit").addEventListener("click",function() {
+  el("saleForm").reset();
+  el("saleEditId").value = "";
+  el("saleDate").value = today();
+  this.classList.add("hidden");
+});
+
+/* EXPENSES */
+
+function renderExpenses() {
+  const search = value("expenseSearch").toLowerCase();
+
+  const rows = data.expenses.filter(e =>
+    String(e.name).toLowerCase().includes(search) ||
+    String(e.category).toLowerCase().includes(search)
+  );
+
+  el("expensesTable").innerHTML = table(
+    ["Date","Description","Category","Amount","Actions"],
+    rows.map(e => `
+      <tr>
+        <td>${safe(e.date)}</td>
+        <td>${safe(e.name)}</td>
+        <td>${safe(e.category)}</td>
+        <td>${money(e.amount)}</td>
+        <td>
+          <div class="actions">
+            <button class="secondary" data-action="edit-expense" data-id="${safe(e.id)}">Edit</button>
+            <button class="danger" data-action="delete-expense" data-id="${safe(e.id)}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `)
+  );
+}
+
+el("expenseSearch").addEventListener("input",renderExpenses);
+
+el("expenseForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  const editId = value("expenseEditId");
+
+  const expense = {
+    id:editId || id(),
+    name:value("expenseName"),
+    amount:Number(value("expenseAmount")),
+    category:value("expenseCategory"),
+    date:value("expenseDate")
+  };
+
+  if (expense.amount <= 0) {
+    alert("Enter a valid amount.");
+    return;
+  }
+
+  const old = data.expenses.find(e => e.id === editId);
+
+  if (old) Object.assign(old,expense);
+  else data.expenses.push(expense);
+
+  this.reset();
+  el("expenseDate").value = today();
+  el("expenseEditId").value = "";
+  el("cancelExpenseEdit").classList.add("hidden");
+
+  saveData();
+  message("Expense saved successfully.");
+});
+
+el("expensesTable").addEventListener("click",function(event) {
+  const button = event.target.closest("button[data-action]");
+
+  if (!button) return;
+
+  const expense = data.expenses.find(e => e.id === button.dataset.id);
+
+  if (!expense) return;
+
+  if (button.dataset.action === "delete-expense") {
+    if (!confirm("Delete this expense?")) return;
+
+    data.expenses = data.expenses.filter(e => e.id !== expense.id);
+    saveData();
+  }
+
+  if (button.dataset.action === "edit-expense") {
+    el("expenseEditId").value = expense.id;
+    el("expenseName").value = expense.name;
+    el("expenseAmount").value = expense.amount;
+    el("expenseCategory").value = expense.category;
+    el("expenseDate").value = expense.date;
+
+    el("cancelExpenseEdit").classList.remove("hidden");
+    showPage("expenses");
+  }
+});
+
+el("cancelExpenseEdit").addEventListener("click",function() {
+  el("expenseForm").reset();
+  el("expenseEditId").value = "";
+  el("expenseDate").value = today();
+  this.classList.add("hidden");
+});
+
+/* INVENTORY */
+
+function renderInventory() {
+  const search = value("productSearch").toLowerCase();
+
+  const rows = data.products.filter(p =>
+    String(p.name).toLowerCase().includes(search) ||
+    String(p.sku).toLowerCase().includes(search)
+  );
+
+  el("inventoryTable").innerHTML = table(
+    ["Product","SKU","Cost","Selling Price","Stock","Actions"],
+    rows.map(p => `
+      <tr>
+        <td>${safe(p.name)}</td>
+        <td>${safe(p.sku)}</td>
+        <td>${money(p.cost)}</td>
+        <td>${money(p.selling)}</td>
+        <td>${p.stock}</td>
+        <td>
+          <div class="actions">
+            <button class="secondary" data-action="edit-product" data-id="${safe(p.id)}">Edit</button>
+            <button class="danger" data-action="delete-product" data-id="${safe(p.id)}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `)
+  );
+}
+
+el("productSearch").addEventListener("input",renderInventory);
+
+el("productForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  const editId = value("productEditId");
+
+  const product = {
+    id:editId || id(),
+    name:value("productName"),
+    sku:value("productSKU"),
+    cost:Number(value("productCost")),
+    selling:Number(value("productSelling")),
+    stock:Number(value("productStock"))
+  };
+
+  if (product.cost < 0 || product.selling <= 0 || product.stock < 0) {
+    alert("Enter valid product prices and stock.");
+    return;
+  }
+
+  const old = data.products.find(p => p.id === editId);
+
+  if (old) Object.assign(old,product);
+  else data.products.push(product);
+
+  this.reset();
+  el("productEditId").value = "";
+  el("cancelProductEdit").classList.add("hidden");
+
+  saveData();
+  message("Product saved successfully.");
+});
+
+el("inventoryTable").addEventListener("click",function(event) {
+  const button = event.target.closest("button[data-action]");
+
+  if (!button) return;
+
+  const product = data.products.find(p => p.id === button.dataset.id);
+
+  if (!product) return;
+
+  if (button.dataset.action === "delete-product") {
+    if (!confirm("Delete this product?")) return;
+
+    if (data.sales.some(s => s.productId === product.id)) {
+      alert("This product has sales records. It cannot be deleted.");
+      return;
+    }
+
+    data.products = data.products.filter(p => p.id !== product.id);
+    saveData();
+  }
+
+  if (button.dataset.action === "edit-product") {
+    el("productEditId").value = product.id;
+    el("productName").value = product.name;
+    el("productSKU").value = product.sku;
+    el("productCost").value = product.cost;
+    el("productSelling").value = product.selling;
+    el("productStock").value = product.stock;
+
+    el("cancelProductEdit").classList.remove("hidden");
+    showPage("inventory");
+  }
+});
+
+el("cancelProductEdit").addEventListener("click",function() {
+  el("productForm").reset();
+  el("productEditId").value = "";
+  this.classList.add("hidden");
+});
+
+/* CUSTOMERS */
+
+function renderCustomers() {
+  const search = value("customerSearch").toLowerCase();
+
+  const rows = data.customers.filter(c =>
+    String(c.name).toLowerCase().includes(search) ||
+    String(c.phone).toLowerCase().includes(search)
+  );
+
+  el("customersTable").innerHTML = table(
+    ["Name","Phone","Email","Address","Actions"],
+    rows.map(c => `
+      <tr>
+        <td>${safe(c.name)}</td>
+        <td>${safe(c.phone)}</td>
+        <td>${safe(c.email)}</td>
+        <td>${safe(c.address)}</td>
+        <td>
+          <div class="actions">
+            <button class="secondary" data-action="edit-customer" data-id="${safe(c.id)}">Edit</button>
+            <button class="danger" data-action="delete-customer" data-id="${safe(c.id)}">Delete</button>
+          </div>
+        </td>
+      </tr>
+    `)
+  );
+}
+
+el("customerSearch").addEventListener("input",renderCustomers);
+
+el("customerForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  const editId = value("customerEditId");
+
+  const customer = {
+    id:editId || id(),
+    name:value("customerName"),
+    phone:value("customerPhone"),
+    email:value("customerEmail"),
+    address:value("customerAddress")
+  };
+
+  const old = data.customers.find(c => c.id === editId);
+
+  if (old) Object.assign(old,customer);
+  else data.customers.push(customer);
+
+  this.reset();
+  el("customerEditId").value = "";
+  el("cancelCustomerEdit").classList.add("hidden");
+
+  saveData();
+  message("Customer saved successfully.");
+});
+
+el("customersTable").addEventListener("click",function(event) {
+  const button = event.target.closest("button[data-action]");
+
+  if (!button) return;
+
+  const customer = data.customers.find(c => c.id === button.dataset.id);
+
+  if (!customer) return;
+
+  if (button.dataset.action === "delete-customer") {
+    if (!confirm("Delete this customer?")) return;
+
+    if (data.sales.some(s => s.customerName === customer.name) ||
+        data.invoices.some(i => i.customerId === customer.id)) {
+      alert("This customer has transaction records and cannot be deleted.");
+      return;
+    }
+
+    data.customers = data.customers.filter(c => c.id !== customer.id);
+    saveData();
+  }
+
+  if (button.dataset.action === "edit-customer") {
+    el("customerEditId").value = customer.id;
+    el("customerName").value = customer.name;
+    el("customerPhone").value = customer.phone;
+    el("customerEmail").value = customer.email;
+    el("customerAddress").value = customer.address;
+
+    el("cancelCustomerEdit").classList.remove("hidden");
+    showPage("customers");
+  }
+});
+
+el("cancelCustomerEdit").addEventListener("click",function() {
+  el("customerForm").reset();
+  el("customerEditId").value = "";
+  this.classList.add("hidden");
+});
+
+/* INVOICES */
+
+function renderInvoices() {
+  el("invoiceTable").innerHTML = table(
+    ["Invoice","Customer","Description","Amount","Due Date"],
+    data.invoices.map(i => `
+      <tr>
+        <td>${safe(i.number)}</td>
+        <td>${safe(i.customerName)}</td>
+        <td>${safe(i.description)}</td>
+        <td>${money(i.amount)}</td>
+        <td>${safe(i.dueDate)}</td>
+      </tr>
+    `)
+  );
+}
+
+el("invoiceForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  const customer = data.customers.find(c => c.id === value("invoiceCustomer"));
+
+  if (!customer) {
+    alert("Please select a customer.");
+    return;
+  }
+
+  const invoice = {
+    id:id(),
+    customerId:customer.id,
+    customerName:customer.name,
+    number:value("invoiceNumber"),
+    description:value("invoiceDescription"),
+    amount:Number(value("invoiceAmount")),
+    dueDate:value("invoiceDueDate"),
+    date:today()
+  };
+
+  if (invoice.amount <= 0) {
+    alert("Enter a valid invoice amount.");
+    return;
+  }
+
+  if (data.invoices.some(i => i.number === invoice.number)) {
+    alert("This invoice number already exists.");
+    return;
+  }
+
+  data.invoices.push(invoice);
+
+  this.reset();
+
+  saveData();
+  message("Invoice created successfully.");
+});
+
+/* REPORTS */
+
+function renderReports() {
+  const sales = data.sales.reduce((sum,s) => sum + Number(s.total || 0),0);
+
+  const expenses = data.expenses.reduce((sum,e) => sum + Number(e.amount || 0),0);
+
+  const stockValue = data.products.reduce(
+    (sum,p) => sum + Number(p.cost || 0)*Number(p.stock || 0),0
+  );
+
+  el("reportContent").innerHTML = `
+    <p><strong>Total Sales:</strong> ${money(sales)}</p>
+    <p><strong>Total Expenses:</strong> ${money(expenses)}</p>
+    <p><strong>Net Profit:</strong> ${money(sales-expenses)}</p>
+    <p><strong>Products:</strong> ${data.products.length}</p>
+    <p><strong>Customers:</strong> ${data.customers.length}</p>
+    <p><strong>Invoices:</strong> ${data.invoices.length}</p>
+    <p><strong>Inventory Cost Value:</strong> ${money(stockValue)}</p>
+  `;
+}
+
+el("printReport").addEventListener("click",function() {
+  window.print();
+});
+
+/* HISTORY */
+
+function renderHistory() {
+  const history = [];
+
+  data.sales.forEach(s => history.push({
+    type:"Sale",
+    description:s.productName,
+    date:s.date,
+    amount:s.total
+  }));
+
+  data.expenses.forEach(e => history.push({
+    type:"Expense",
+    description:e.name,
+    date:e.date,
+    amount:e.amount
+  }));
+
+  history.sort((a,b) => String(b.date).localeCompare(String(a.date)));
+
+  el("historyTable").innerHTML = table(
+    ["Type","Description","Date","Amount"],
+    history.map(h => `
+      <tr>
+        <td>${safe(h.type)}</td>
+        <td>${safe(h.description)}</td>
+        <td>${safe(h.date)}</td>
+        <td>${money(h.amount)}</td>
+      </tr>
+    `)
+  );
+}
+
+/* SETTINGS */
+
+function renderSettings() {
+  el("businessName").value = data.business.name || "";
+  el("businessPhone").value = data.business.phone || "";
+  el("businessEmail").value = data.business.email || "";
+  el("businessAddress").value = data.business.address || "";
+}
+
+el("settingsForm").addEventListener("submit",function(event) {
+  event.preventDefault();
+
+  data.business = {
+    name:value("businessName"),
+    phone:value("businessPhone"),
+    email:value("businessEmail"),
+    address:value("businessAddress")
+  };
+
+  saveData();
+  message("Business profile saved.");
+});
+
+/* BACKUP */
+
+el("backupButton").addEventListener("click",function() {
+  const blob = new Blob(
+    [JSON.stringify(data,null,2)],
+    {type:"application/json"}
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "smartbiz-backup.json";
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  URL.revokeObjectURL(url);
+});
+
+el("restoreButton").addEventListener("click",function() {
+  const file = el("restoreFile").files[0];
+
+  if (!file) {
+    alert("Please select a backup file.");
+    return;
+  }
+
+  if (!confirm("Restore this backup? Current records will be replaced.")) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function() {
+    try {
+      const parsed = JSON.parse(reader.result);
+
+      if (!parsed || !Array.isArray(parsed.sales) ||
+          !Array.isArray(parsed.products) ||
+          !Array.isArray(parsed.expenses) ||
+          !Array.isArray(parsed.customers) ||
+          !Array.isArray(parsed.invoices)) {
+        throw new Error("Invalid backup format.");
+      }
+
+      data = {
+        ...clone(defaultData),
+        ...parsed,
+        business:{
+          ...defaultData.business,
+          ...(parsed.business || {})
+        }
+      };
+
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+
+      renderAll();
+      message("Backup restored successfully.");
+
+    } catch(error) {
+      alert("Unable to restore backup. Check that the file is valid.");
+      console.error(error);
+    }
+  };
+
+  reader.readAsText(file);
+});
+
+/* RENDER ALL */
+
+function renderAll() {
+  el("currency").value = data.currency || "NGN";
+
+  updateSelects();
+  renderDashboard();
+  renderSales();
+  renderExpenses();
+  renderInventory();
+  renderCustomers();
+  renderInvoices();
+  renderReports();
+  renderHistory();
+  renderSettings();
+}
+
+/* INITIALISE */
+
+function initialise() {
+  el("saleDate").value = today();
+  el("expenseDate").value = today();
+
+  renderAll();
+  showPage("dashboard");
+
+  console.log("SmartBiz Manager V1.4 started successfully.");
+}
+
+initialise();
+
+</script>
+
+</body>
+</html>
